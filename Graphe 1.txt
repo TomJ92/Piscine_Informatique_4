@@ -1,0 +1,28 @@
+11
+
+Baleine bleue
+Krill
+Phytoplancton
+Orque
+Phoque crabier
+Manchot adelie
+Leopard de mer
+Poissons
+Calmar
+Zooplancton carnivore
+Zooplancton herbivore
+
+Krill Baleine bleue 6
+Krill Phoque crabier 8
+Krill Manchot adelie 3
+Krill Poissons 5
+Phytoplancton Krill 12
+Phytoplancton Zooplancton herbivore 1
+Phoque crabier Leopard de mer 2
+Manchot adelie Leopard de mer 8
+Leopard de mer Orque 7
+Poissons Calmar 10
+Poissons Leopard de mer 4
+Calmar Leopard de mer 5
+Zooplancton carnivore Krill 7
+Zooplancton herbivore Calmar 3
