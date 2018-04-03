@@ -1,0 +1,36 @@
+12
+
+Dialga 
+Kravarech
+Latios
+Giratina
+Dracolosse
+Drakkarmin
+Latias
+Zekrom
+Reshiram
+Kyurem
+Trioxhydre
+Carchacrok
+
+Dialga Carchacrok 5
+Kravarech Carchacrok 10
+Kravarech Latios 7
+Kravarech Latias 9
+Kravarech Kyurem 8
+Latios Giratina 3
+Latios Kyurem 11
+Latios Trioxhydre 4
+Giratina Kyurem 12
+Giratina Trioxhydre 5
+Dracolosse Kyurem 8
+Drakkarmin Kyurem 7
+Latias Giratina 2
+Latias Kyurem 10
+Latias Trioxhydre 3 
+Zekrom Kyurem 9
+Zekrom Carchacrok 6
+Reshiram Carchacrok 11
+Kyurem Dialga 15
+Trioxhydre Kyurem 5
+Carchacrok Kyurem 7

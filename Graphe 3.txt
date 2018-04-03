@@ -1,0 +1,27 @@
+8
+
+Grolem
+Staross
+Dracaufeu
+Florizarre
+Zigzaton
+Noctali
+Mackogneur
+Luxray
+
+Grolem Staross 3
+Grolem Florizarre 1
+Grolem Mackogneur 4
+Staross Luxray 6
+Staross Florizarre 8
+Staross Noctali 2
+Dracaufeu Grolem 3
+Dracaufeu Staross 5
+Dracaufeu Luxray 9
+Florizarre Staross 7
+Florizarre Dracaufeu
+Zigzaton Mackogneur 1
+Noctali Mackogneur 9
+Mackogneur Dracaufeu 5
+Mackogneur Staross  4
+Luxray Grolem 10
