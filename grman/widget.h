@@ -442,6 +442,8 @@ class WidgetEdge : public Widget
 
         void set_children_position(double rel_pos) { m_children_position = rel_pos; }
         void set_children_lateral(double abs_lat) { m_children_lateral = abs_lat; }
+        ///agrandir le poids de l'arête en focntion de son poids
+        void grossir(double weight);
 };
 
 

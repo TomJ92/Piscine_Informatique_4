@@ -403,7 +403,11 @@ void WidgetEdge::draw()
     }
 
 }
-
+///la fonction qui fait grossir les arêtes
+void WidgetEdge::grossir(double weight)
+{
+    m_thickness=1+(weight/30);
+}
 
 
 }

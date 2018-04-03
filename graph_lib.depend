@@ -62,3 +62,68 @@
 	<iostream>
 	"MENU_FONCTIONS.h"
 
+1522795529 source:c:\users\ben\documents\github\piscine_informatique_4\grman\coords.cpp
+	"coords.h"
+
+1522795529 c:\users\ben\documents\github\piscine_informatique_4\grman\coords.h
+	<cmath>
+
+1522795529 source:c:\users\ben\documents\github\piscine_informatique_4\grman\grman.cpp
+	<cmath>
+	<unordered_map>
+	<unordered_set>
+	<utility>
+	<string>
+	<iostream>
+	<regex>
+	"grman.h"
+	<allegro.h>
+	<png.h>
+	<loadpng.h>
+	<jpgalleg.h>
+
+1522795529 c:\users\ben\documents\github\piscine_informatique_4\grman\grman.h
+	<allegro.h>
+	<string>
+	"grman_couleurs.h"
+	"coords.h"
+	"widget.h"
+
+1522795529 c:\users\ben\documents\github\piscine_informatique_4\grman\grman_couleurs.h
+
+1522796000 c:\users\ben\documents\github\piscine_informatique_4\grman\widget.h
+	"grman.h"
+	<iostream>
+	<string>
+	<vector>
+	<algorithm>
+	<allegro.h>
+
+1522796243 source:c:\users\ben\documents\github\piscine_informatique_4\main.cpp
+	"grman/grman.h"
+	<iostream>
+	"menu_fonctions.cpp"
+	"graph.h"
+
+1522795529 c:\users\ben\documents\github\piscine_informatique_4\menu_fonctions.cpp
+	"grman/grman.h"
+	<iostream>
+	"MENU_FONCTIONS.h"
+
+1522795529 c:\users\ben\documents\github\piscine_informatique_4\menu_fonctions.h
+
+1522796090 c:\users\ben\documents\github\piscine_informatique_4\graph.h
+	<fstream>
+	<iostream>
+	<vector>
+	<map>
+	<string>
+	<memory>
+	"grman/grman.h"
+
+1522796000 source:c:\users\ben\documents\github\piscine_informatique_4\grman\widget.cpp
+	"widget.h"
+
+1522796149 source:c:\users\ben\documents\github\piscine_informatique_4\graph.cpp
+	"graph.h"
+

@@ -114,6 +114,9 @@ void Edge::pre_update()
 
     /// Copier la valeur locale de la donnée m_weight vers le label sous le slider
     m_interface->m_label_weight.set_message( std::to_string( (int)m_weight ) );
+
+    ///faire grossir la flêche en fonction de son poids
+    m_interface->m_top_edge.grossir(m_weight);
 }
 
 /// Gestion du Edge après l'appel à l'interface
@@ -187,6 +190,121 @@ void Graph::make_example()
     add_interfaced_edge(9, 3, 7, 80.0);
 }
 
+///Ss programme qui remplit un graphe en fonction d'un fichier
+void Graph::ReadFile(std::string fileName)
+{
+    m_interface = std::make_shared<GraphInterface>(50, 0, 750, 600);
+    ///varialbe string pour sauter des lignes
+    std::string nom;
+    ///information utile pour faire le sommet
+    int numS, x, y;
+    double valeur;
+    std::string pic_name;
+    ///lecture du fichier
+    std::ifstream fichier(fileName+".txt",std::ios::in);
+    ///si on lit le fichier
+    if(fichier)
+    {
+        ///on récupére l'ordre du graphe et on saute une ligne
+        fichier>>m_ordre;
+        getline(fichier,nom);
+        ///on se base sur le nb de sommet présent dans le graphe
+        for(int i=0; i<m_ordre; i++)
+        {
+            ///on remplit le numéro
+            fichier>>numS;
+            getline(fichier,nom);
+            ///sa valeur
+            fichier>>valeur;
+            getline(fichier,nom);
+            ///sa position
+            fichier>>x;
+            getline(fichier,nom);
+            fichier>>y;
+            getline(fichier,nom);
+            ///son image
+            fichier>>pic_name;
+            getline(fichier,nom);
+            ///on ajoute un vecteur
+            add_interfaced_vertex(numS,valeur,x,y,pic_name);
+        }
+        ///on récupére le nb d'arête présente dans notre graphe
+        fichier>>m_nbArete;
+        ///en fonction de nb d'arête
+        for(int i=0; i<m_nbArete; i++)
+        {
+            ///on récupére le numéro du sommet
+            fichier>>numS;
+            getline(fichier,nom);
+            ///sa position
+            fichier>>x;
+            getline(fichier,nom);
+            fichier>>y;
+            getline(fichier,nom);
+            ///sa valeur
+            fichier>>valeur;
+            getline(fichier,nom);
+            ///on ajoute une nouvelle arête
+            add_interfaced_edge(numS,x,y,valeur);
+        }
+        ///on ferme le fichier
+        fichier.close();
+    }
+    ///si on arrive pas à lire le fichier, on envoies un exception
+    else
+    {
+        throw std::string("Il n'exite pas de fichier portant ce nom");
+    }
+}
+
+///ss programme qui sauvegarde un graphe en le remplissant dans un fichier
+void Graph::saveFile(std::string fileName)
+{
+    ///variable pour la valeur de l'image
+    std::string number;
+    ///position du sommet
+    int posInter=0;
+    ///string du nom de l'image qui change en focntion du numéro de graphe
+    std::string name="clown";
+    ///notre fichier txt
+    std::ofstream fichier(fileName+ ".txt",std::ios::out);
+    ///si on lit un fichier
+    if(fichier)
+    {
+        ///on regarde l'ordre du graphe
+        fichier<<m_vertices.size()<<std::endl;
+        ///pour tout les sommets existants
+        for(auto &el:m_vertices)
+        {
+            ///on écrit le numéro de sommet, sa valeur, sa position et le nom de son image
+            fichier<<el.first<<std::endl;
+            fichier<<el.second.m_value<<std::endl;
+            posInter=el.second.m_interface->m_top_box.get_posx()+2;
+            fichier<<posInter<<std::endl;
+            posInter=el.second.m_interface->m_top_box.get_posy()+2;
+            fichier<<posInter<<std::endl;
+            number=std::to_string(el.first+1);
+            fichier<<name+number+".jpg"<<std::endl;
+        }
+        ///on lit le nb d'arête
+        fichier<<m_edges.size()<<std::endl;
+        ///pour toutes les arêtes existantes
+        for(auto &el:m_edges)
+        {
+            ///on lit leur numéros, les sommets et leurs valeurs
+            fichier<<el.first<<std::endl;
+            fichier<<el.second.m_to<<std::endl;
+            fichier<<el.second.m_from<<std::endl;
+            fichier<<el.second.m_weight<<std::endl;
+        }
+    }
+    ///sinon on envoie une exception
+    else
+    {
+        throw std::string("Il n'exite pas de fichier portant ce nom");
+    }
+}
+
 /// La méthode update à appeler dans la boucle de jeu pour les graphes avec interface
 void Graph::update()
 {
@@ -243,5 +361,8 @@ void Graph::add_interfaced_edge(int idx, int id_vert1, int id_vert2, double weig
     EdgeInterface *ei = new EdgeInterface(m_vertices[id_vert1], m_vertices[id_vert2]);
     m_interface->m_main_box.add_child(ei->m_top_edge);
     m_edges[idx] = Edge(weight, ei);
+    ///on donne les valeurs de m_from et m_to
+    m_edges[idx].setFrom(id_vert1);
+    m_edges[idx].setTo(id_vert2);
 }
 
