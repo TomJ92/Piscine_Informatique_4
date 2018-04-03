@@ -2,6 +2,7 @@
 #include <iostream>
 #define LARGEURECRAN 2056
 #define HAUTEURECRAN 1156
+
 #include "MENU_FONCTIONS.h"
 void regles()
 {
