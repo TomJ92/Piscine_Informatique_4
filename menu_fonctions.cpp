@@ -2,12 +2,12 @@
 #include <iostream>
 #define LARGEURECRAN 2056
 #define HAUTEURECRAN 1156
-
+#include "graph.h"
 #include "MENU_FONCTIONS.h"
 void regles()
 {
     BITMAP* regles=create_bitmap(LARGEURECRAN,HAUTEURECRAN);
-    regles=load_bitmap("regles.bmp",0);
+    regles=load_bitmap("menu/regles.bmp",0);
     blit(regles,screen,0,0,0,0,LARGEURECRAN,HAUTEURECRAN);
     readkey();
 }
@@ -15,14 +15,17 @@ void afficher()
 {
     ///On initialise allegro
     grman::init();
+    grman::set_pictures_path("pics");
     ///On déclare les bitmaps
     BITMAP* menu_p,*menu_graphe1,*menu_graphe2,*menu_graphe3,*menu_explications,*menu_quitter,*buffer=create_bitmap(HAUTEURECRAN,LARGEURECRAN);
-    menu_p=load_bitmap("MENU_P.bmp",0);
-    menu_graphe1=load_bitmap("MENu-Graphe1.bmp",0);
-    menu_graphe2=load_bitmap("MENU-Graphe2.bmp",0);
-    menu_graphe3=load_bitmap("MENU-Graphe3.bmp",0);
-    menu_explications=load_bitmap("MENU-Explications.bmp",0);
-    menu_quitter=load_bitmap("MENU-Quitter.bmp",0);
+    Graph g;
+    menu_p=load_bitmap("menu/MENU_P.bmp",0);
+    menu_graphe1=load_bitmap("menu/MENu-Graphe1.bmp",0);
+    menu_graphe2=load_bitmap("menu/MENU-Graphe2.bmp",0);
+    menu_graphe3=load_bitmap("menu/MENU-Graphe3.bmp",0);
+    menu_explications=load_bitmap("menu/MENU-Explications.bmp",0);
+    menu_quitter=load_bitmap("menu/MENU-Quitter.bmp",0);
+    int i=0;
     ///Déclaration des variables
     bool quitter=false;
     unsigned int choix=0;
@@ -90,23 +93,64 @@ void afficher()
         clear_bitmap(buffer);
         switch(choix)
         {
-        case 0 :
+        case 0:
             break;
         case 1 :
+            g.ReadFile("Graphe1",1);
+            /// Vous gardez la main sur la "boucle de jeu"
+            /// ( contrairement à des frameworks plus avancés )
+            while ( !g.getQuitGraph() )
+            {
+                /// Il faut appeler les méthodes d'update des objets qui comportent des widgets
+                g.update();
+                /// Mise à jour générale (clavier/souris/buffer etc...)
+                grman::mettre_a_jour();
+                if(key[KEY_S])
+                {
+                    g.addVertex();
+                    rest(300);
+                }
+            }
+            g.initialisation();
+            rest(300);
             break;
         case 2:
+            g.ReadFile("Graphe2",2);
+            /// Vous gardez la main sur la "boucle de jeu"
+            /// ( contrairement à des frameworks plus avancés )
+            while ( !g.getQuitGraph() )
+            {
+                /// Il faut appeler les méthodes d'update des objets qui comportent des widgets
+                g.update();
+                /// Mise à jour générale (clavier/souris/buffer etc...)
+                grman::mettre_a_jour();
+            }
+            g.initialisation();
+            rest(300);
             break;
         case 3:
+            g.ReadFile("Graphe3",3);
+            /// Vous gardez la main sur la "boucle de jeu"
+            /// ( contrairement à des frameworks plus avancés )
+            while ( !g.getQuitGraph() )
+            {
+                /// Il faut appeler les méthodes d'update des objets qui comportent des widgets
+                g.update();
+                /// Mise à jour générale (clavier/souris/buffer etc...)
+                grman::mettre_a_jour();
+            }
+            g.initialisation();
+            rest(300);
             break;
         ///Si on clique sur "Explications"
         case 4:
             regles();
-            choix=0;
             break;
         default :
             quitter=true;
             break;
         }
+        choix=0;
     }
     grman::fermer_allegro();
 }

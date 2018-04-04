@@ -114,6 +114,9 @@ class VertexInterface
 
         // Une boite pour le label précédent
         grman::WidgetText m_box_label_idx;
+        ///croix pour supprimer un sommets
+        grman::WidgetCheckBox m_cross;
+
 
     public :
 
@@ -223,6 +226,7 @@ class Edge
         std::shared_ptr<EdgeInterface> m_interface = nullptr;
 
 
+
     public:
 
         /// Les constructeurs sont à compléter selon vos besoin...
@@ -275,6 +279,8 @@ class GraphInterface
         grman::WidgetText m_text_save;
         grman::WidgetButton m_button_reset;
         grman::WidgetText m_text_reset;
+        grman::WidgetButton m_button_quit;
+        grman::WidgetText m_text_quit;
 
     public :
 
@@ -303,6 +309,12 @@ class Graph
         ///nb d'arête du graphe
         int m_nbArete;
 
+        ///NUMERO DU GRAPHE
+        int m_numGraphe;
+
+        ///boléen pour quitter le graphe
+        bool m_quitGraphe;
+
 
         ///
 
@@ -326,11 +338,24 @@ class Graph
         /// La méthode update à appeler dans la boucle de jeu pour les graphes avec interface
         void update();
         ///ss prog qui remplit un graphe en fonction d'un fichier
-        void ReadFile(std::string fileName);
+        void ReadFile(std::string fileName, int num);
         ///ss prog qui sauve un graphe en remplissant un fichier
         void saveFile(std::string fileName);
         ///réinitialise les sommet à leurs position de départ
         void reinit(std::string fileName);
+        ///initialisation du graphe
+        void initialisation();
+        ///setter
+        bool getQuitGraph() {return m_quitGraphe;}
+        void setQuitGraph(bool quitGraph) {m_quitGraphe=quitGraph; }
+        ///enlever un sommet
+        void removeVertex(int num);
+        ///enlever une arête
+        void removeEdge(int num);
+        ///ajouter un sommet
+        void addVertex();
+        ///ajouter une arête
+        void addEdge();
 };
 
 

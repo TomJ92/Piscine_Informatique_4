@@ -5,6 +5,7 @@
 
 int main()
 {
+     /*
     /// A appeler en 1er avant d'instancier des objets graphiques etc...
     grman::init();
 
@@ -40,9 +41,8 @@ int main()
         }
     }
 
-    grman::fermer_allegro();
-
-    return 0;
+    grman::fermer_allegro();*/
+    afficher();
     return 0;
 }
 END_OF_MAIN();
