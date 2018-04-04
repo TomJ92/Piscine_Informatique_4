@@ -151,6 +151,25 @@ GraphInterface::GraphInterface(int x, int y, int w, int h)
     m_main_box.set_dim(908,720);
     m_main_box.set_gravity_xy(grman::GravityX::Right, grman::GravityY::Up);
     m_main_box.set_bg_color(BLANCJAUNE);
+
+    m_top_box.add_child(m_button_save);
+    m_button_save.set_dim(50,35);
+    m_button_save.set_pos(15,15);
+    m_button_save.set_bg_color(BLEUCLAIR);
+
+    m_button_save.add_child(m_text_save);
+    m_text_save.set_pos(2,13);
+    m_text_save.set_message("Sauver");
+
+    m_top_box.add_child(m_button_reset);
+    m_button_reset.set_dim(50,35);
+    m_button_reset.set_pos(15,65);
+    m_button_reset.set_bg_color(ROUGE);
+
+    m_button_reset.add_child(m_text_reset);
+    m_text_reset.set_pos(6,13);
+    m_text_reset.set_message("Reset");
+
 }
 
 
@@ -190,6 +209,74 @@ void Graph::make_example()
     add_interfaced_edge(9, 3, 7, 80.0);
 }
 
+void Graph::reinit(std::string fileName)
+{
+    m_interface = std::make_shared<GraphInterface>(50, 0, 750, 600);
+    std::string nom;
+    int xdep,ydep,numS;
+    double valeur;
+    std::string pic_name;
+    std::ifstream fichier(fileName,std::ios::in);
+    for(auto it = m_vertices.begin(); it != m_vertices.end();)
+    {
+        it=m_vertices.erase(it);
+    }
+    for(auto it=m_edges.begin(); it!=m_edges.end();)
+    {
+        it=m_edges.erase(it);
+    }
+    if(fichier)
+    {
+         ///on récupére l'ordre du graphe et on saute une ligne
+        fichier>>m_ordre;
+        getline(fichier,nom);
+        ///on se base sur le nb de sommet présent dans le graphe
+        for(int i=0; i<m_ordre; i++)
+        {
+            ///on remplit le numéro
+            fichier>>numS;
+            getline(fichier,nom);
+            ///sa valeur
+            fichier>> valeur;
+            getline(fichier,nom);
+            ///sa position
+            fichier>>xdep;
+            getline(fichier,nom);
+            fichier>>ydep;
+            getline(fichier,nom);
+            ///son image
+            fichier>>pic_name;
+            getline(fichier,nom);
+            ///on ajoute un vecteur
+            add_interfaced_vertex(numS,valeur,xdep,ydep,pic_name);
+        }
+        fichier>>m_nbArete;
+        getline(fichier,nom);
+        for(int i=0;i<m_nbArete;i++)
+        {
+            ///on récupére le numéro du sommet
+            fichier>>numS;
+            getline(fichier,nom);
+            ///sa position
+            fichier>>xdep;
+            getline(fichier,nom);
+            fichier>>ydep;
+            getline(fichier,nom);
+            ///sa valeur
+            fichier>>valeur;
+            getline(fichier,nom);
+            ///on ajoute une nouvelle arête
+            add_interfaced_edge(numS,xdep,ydep,valeur);
+
+        }
+        std::cout<<"RESET"<<std::endl;
+        fichier.close();
+    }
+    else
+    {
+        throw std::string("Il n'exite pas de fichier portant ce nom");
+    }
+}
 ///Ss programme qui remplit un graphe en fonction d'un fichier
 void Graph::ReadFile(std::string fileName)
 {
@@ -227,6 +314,7 @@ void Graph::ReadFile(std::string fileName)
             getline(fichier,nom);
             ///on ajoute un vecteur
             add_interfaced_vertex(numS,valeur,x,y,pic_name);
+
         }
         ///on récupére le nb d'arête présente dans notre graphe
         fichier>>m_nbArete;
@@ -324,6 +412,29 @@ void Graph::update()
 
     for (auto &elt : m_edges)
         elt.second.post_update();
+    if(m_interface->m_button_save.get_value())
+    {
+        try
+        {
+            saveFile("Graphe1");
+        }
+        catch(const std::string & e)
+            {
+                std::cout << e << "\n\n";
+            }
+    }
+    if(m_interface->m_button_reset.get_value())
+    {
+        try
+        {
+            reinit("Graphe1Reset.txt");
+        }
+        catch(const std::string & e)
+            {
+                std::cout << e << "\n\n";
+            }
+
+    }
 
 }
 
@@ -365,4 +476,3 @@ void Graph::add_interfaced_edge(int idx, int id_vert1, int id_vert2, double weig
     m_edges[idx].setFrom(id_vert1);
     m_edges[idx].setTo(id_vert2);
 }
-

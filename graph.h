@@ -149,7 +149,6 @@ class Vertex
         // La ligne précédente est en gros équivalent à la ligne suivante :
         // VertexInterface * m_interface = nullptr;
 
-
     public:
 
         /// Les constructeurs sont à compléter selon vos besoin...
@@ -272,6 +271,10 @@ class GraphInterface
 
         // A compléter éventuellement par des widgets de décoration ou
         // d'édition (boutons ajouter/enlever ...)
+        grman::WidgetButton m_button_save;
+        grman::WidgetText m_text_save;
+        grman::WidgetButton m_button_reset;
+        grman::WidgetText m_text_reset;
 
     public :
 
@@ -301,6 +304,8 @@ class Graph
         int m_nbArete;
 
 
+        ///
+
     public:
 
         /// Les constructeurs sont à compléter selon vos besoin...
@@ -324,6 +329,8 @@ class Graph
         void ReadFile(std::string fileName);
         ///ss prog qui sauve un graphe en remplissant un fichier
         void saveFile(std::string fileName);
+        ///réinitialise les sommet à leurs position de départ
+        void reinit(std::string fileName);
 };
 
 
