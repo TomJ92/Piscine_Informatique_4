@@ -400,7 +400,7 @@ struct ArrowItem
 };
 
 class WidgetEdge : public Widget
-{
+    {
     protected :
 
         // Les Widgets de référence de départ [0] et d'arrivée [1] de l'arête
@@ -414,7 +414,7 @@ class WidgetEdge : public Widget
         std::vector<ArrowItem> m_items;
 
         int m_color = GRISSOMBRE;
-        int m_thickness = 2;
+        float m_thickness = 2;
 
         // Position relative des éventuels Widgets enfants le long de l'arc, 0 origine, 0.5 milieu, 1.0 destination
         double m_children_position = 0.5;
@@ -442,6 +442,8 @@ class WidgetEdge : public Widget
 
         void set_children_position(double rel_pos) { m_children_position = rel_pos; }
         void set_children_lateral(double abs_lat) { m_children_lateral = abs_lat; }
+        ///agrandir le poids de l'arête en focntion de son poids
+        void grossir(double weight);
 };
 
 

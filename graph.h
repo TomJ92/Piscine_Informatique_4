@@ -1,6 +1,7 @@
 #ifndef GRAPH_H_INCLUDED
 #define GRAPH_H_INCLUDED
-
+#include <fstream>
+#include <iostream>
 /**************************************************************
     Ici sont proposées 3 classes fondamentales
             Vertex (=Sommet)
@@ -148,7 +149,6 @@ class Vertex
         // La ligne précédente est en gros équivalent à la ligne suivante :
         // VertexInterface * m_interface = nullptr;
 
-
     public:
 
         /// Les constructeurs sont à compléter selon vos besoin...
@@ -235,6 +235,11 @@ class Edge
         /// Voir l'implémentation Graph::update dans le .cpp
         void pre_update();
         void post_update();
+        int getFrom() { return m_from; }
+        int getTo() { return m_to; }
+        void setFrom(int from) {m_from=from;}
+        void setTo(int to) {m_to=to;}
+
 };
 
 
@@ -266,6 +271,10 @@ class GraphInterface
 
         // A compléter éventuellement par des widgets de décoration ou
         // d'édition (boutons ajouter/enlever ...)
+        grman::WidgetButton m_button_save;
+        grman::WidgetText m_text_save;
+        grman::WidgetButton m_button_reset;
+        grman::WidgetText m_text_reset;
 
     public :
 
@@ -288,6 +297,14 @@ class Graph
         /// le POINTEUR sur l'interface associée, nullptr -> pas d'interface
         std::shared_ptr<GraphInterface> m_interface = nullptr;
 
+        ///ordre du graphe
+        int m_ordre;
+
+        ///nb d'arête du graphe
+        int m_nbArete;
+
+
+        ///
 
     public:
 
@@ -308,6 +325,12 @@ class Graph
 
         /// La méthode update à appeler dans la boucle de jeu pour les graphes avec interface
         void update();
+        ///ss prog qui remplit un graphe en fonction d'un fichier
+        void ReadFile(std::string fileName);
+        ///ss prog qui sauve un graphe en remplissant un fichier
+        void saveFile(std::string fileName);
+        ///réinitialise les sommet à leurs position de départ
+        void reinit(std::string fileName);
 };
 
 
