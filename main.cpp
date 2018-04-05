@@ -20,22 +20,20 @@ int main()
     clock_t temps_ini;
     temps_ini=clock();
     unsigned int compteur=0;
-
-
     /// Vous gardez la main sur la "boucle de jeu"
     /// ( contrairement à des frameworks plus avancés )
     while ( !key[KEY_ESC] )
     {
 
         /// Il faut appeler les méthodes d'update des objets qui comportent des widgets
-        g.update(temps_ini);
-
+           g.update(temps_ini);
         /// Mise à jour générale (clavier/souris/buffer etc...)
         grman::mettre_a_jour();
         compteur++;
         if (compteur%30==0)
             temps_ini=temps_ini+1000;
         std::cout<<(unsigned int)temps_ini/CLOCKS_PER_SEC<<std::endl;
+
     }
 
     grman::fermer_allegro();

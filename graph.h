@@ -141,9 +141,9 @@ class Vertex
         /// un exemple de donnée associée à l'arc, on peut en ajouter d'autres...
         double m_value;
         /// Cacapité de portage de l'environnement
-        unsigned int k_capacite;
+        double k_capacite;
         /// Rythme de croissance
-        unsigned int coeff_croissance;
+        double coeff_croissance;
 
         /// le POINTEUR sur l'interface associée, nullptr -> pas d'interface
         std::shared_ptr<VertexInterface> m_interface = nullptr;
@@ -314,6 +314,7 @@ class Graph
         void update(clock_t ini);
         /// Augmente la capacité des sommets au cours du temps
         void croissance_sommets(clock_t temps);
+        void random_num();
 
 };
 
