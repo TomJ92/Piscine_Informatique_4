@@ -5,7 +5,7 @@
 
 int main()
 {
-     /*
+    /*
     /// A appeler en 1er avant d'instancier des objets graphiques etc...
     grman::init();
 
@@ -22,23 +22,23 @@ int main()
     /// ( contrairement à des frameworks plus avancés )
     while ( !key[KEY_ESC] )
     {
-        /// Il faut appeler les méthodes d'update des objets qui comportent des widgets
-        g.update();
+       /// Il faut appeler les méthodes d'update des objets qui comportent des widgets
+       g.update();
 
 
-        /// Mise à jour générale (clavier/souris/buffer etc...)
-        grman::mettre_a_jour();
-        if(key[KEY_S])
-        {
-            try
-            {
-                g.saveFile("Graphe1");
-            }
-            catch(const std::string & e)
-            {
-                std::cout << e << "\n\n";
-            }
-        }
+       /// Mise à jour générale (clavier/souris/buffer etc...)
+       grman::mettre_a_jour();
+       if(key[KEY_S])
+       {
+           try
+           {
+               g.saveFile("Graphe1");
+           }
+           catch(const std::string & e)
+           {
+               std::cout << e << "\n\n";
+           }
+       }
     }
 
     grman::fermer_allegro();*/

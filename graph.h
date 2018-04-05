@@ -116,6 +116,8 @@ class VertexInterface
         grman::WidgetText m_box_label_idx;
         ///croix pour supprimer un sommets
         grman::WidgetCheckBox m_cross;
+        ///bouton pour savoir quelle sommets pour les arêtes
+        grman::WidgetButton m_button_addEdge;
 
 
     public :
@@ -196,12 +198,16 @@ class EdgeInterface
 
         // Un label de visualisation du poids de l'arc
         grman::WidgetText m_label_weight;
+        ///croix pour supprimer les arêtes
+        grman::WidgetCheckBox m_cross;
+        ///texte pour afficher les numéro de sommet de l'arête
+        grman::WidgetText m_text_number;
 
     public :
 
         // Le constructeur met en place les éléments de l'interface
         // voir l'implémentation dans le .cpp
-        EdgeInterface(Vertex& from, Vertex& to);
+        EdgeInterface(Vertex& from, Vertex& to,int numS1, int numS2);
 };
 
 
@@ -239,6 +245,7 @@ class Edge
         /// Voir l'implémentation Graph::update dans le .cpp
         void pre_update();
         void post_update();
+        ///accesseurs
         int getFrom() { return m_from; }
         int getTo() { return m_to; }
         void setFrom(int from) {m_from=from;}
@@ -275,12 +282,24 @@ class GraphInterface
 
         // A compléter éventuellement par des widgets de décoration ou
         // d'édition (boutons ajouter/enlever ...)
+        ///bouton pour sauver avec le texte
         grman::WidgetButton m_button_save;
         grman::WidgetText m_text_save;
+        ///bouton pour reset les postion et les sommets de notre graphe
         grman::WidgetButton m_button_reset;
         grman::WidgetText m_text_reset;
+        ///bouton pour quitter notre graphe
         grman::WidgetButton m_button_quit;
         grman::WidgetText m_text_quit;
+        ///bouton pour ajouter un sommet
+        grman::WidgetButton m_button_addVertex;
+        grman::WidgetText m_text_addV;
+        grman::WidgetText m_text_vertex;
+        ///bouton pour ajouter une arête
+        grman::WidgetButton m_button_addEdge;
+        grman::WidgetText m_text_addE;
+        grman::WidgetText m_text_edge;
+
 
     public :
 
@@ -315,8 +334,16 @@ class Graph
         ///boléen pour quitter le graphe
         bool m_quitGraphe;
 
+        ///boléen qui dit si on doit ajouter une arête
+        bool m_ajouterNewEdge;
 
-        ///
+        ///SAVOIR LES SOMMET QUI VONT FORMER UNE ARRËTE
+        ///savoir si on ajoute le sommet1 ou 2
+        bool m_addTo;
+        bool m_addFrom;
+        std::vector<int> m_vertexForNewEdge;
+        ///pour éviter de selectionner 2 fois le même sommets
+        int m_vertexAlreadyUse;
 
     public:
 
@@ -355,7 +382,9 @@ class Graph
         ///ajouter un sommet
         void addVertex();
         ///ajouter une arête
-        void addEdge();
+        void addEdge(std::vector<int> m_newVertexForEdge);
+        ///mettre tout les bouton à false
+        void initButton();
 };
 
 
