@@ -1,5 +1,5 @@
 #include "graph.h"
-
+#include <ctime>
 /***************************************************
                     VERTEX
 ****************************************************/
@@ -14,7 +14,7 @@ VertexInterface::VertexInterface(int idx, int x, int y, std::string pic_name, in
 
     // Le slider de réglage de valeur
     m_top_box.add_child( m_slider_value );
-    m_slider_value.set_range(0.0 , 100.0); // Valeurs arbitraires, à adapter...
+    m_slider_value.set_range(0.0, 100.0);  // Valeurs arbitraires, à adapter...
     m_slider_value.set_dim(20,80);
     m_slider_value.set_gravity_xy(grman::GravityX::Left, grman::GravityY::Up);
 
@@ -67,7 +67,6 @@ void Vertex::post_update()
 }
 
 
-
 /***************************************************
                     EDGE
 ****************************************************/
@@ -92,7 +91,7 @@ EdgeInterface::EdgeInterface(Vertex& from, Vertex& to)
 
     // Le slider de réglage de valeur
     m_box_edge.add_child( m_slider_weight );
-    m_slider_weight.set_range(0.0 , 100.0); // Valeurs arbitraires, à adapter...
+    m_slider_weight.set_range(0.0, 100.0);  // Valeurs arbitraires, à adapter...
     m_slider_weight.set_dim(16,40);
     m_slider_weight.set_gravity_y(grman::GravityY::Up);
 
@@ -188,7 +187,7 @@ void Graph::make_example()
 }
 
 /// La méthode update à appeler dans la boucle de jeu pour les graphes avec interface
-void Graph::update()
+void Graph::update(clock_t ini)
 {
     if (!m_interface)
         return;
@@ -206,6 +205,7 @@ void Graph::update()
 
     for (auto &elt : m_edges)
         elt.second.post_update();
+    croissance_sommets(ini);
 
 }
 
@@ -245,3 +245,60 @@ void Graph::add_interfaced_edge(int idx, int id_vert1, int id_vert2, double weig
     m_edges[idx] = Edge(weight, ei);
 }
 
+void Graph::croissance_sommets(clock_t temps)
+{
+    if ((temps/CLOCKS_PER_SEC)%5==0)
+    {
+        for (auto &elt : m_vertices)
+        {
+            std::vector<Edge> arretes_voisines;
+            for(auto &elm : m_edges)
+            {
+                if (m_vertices[elm.second.m_to]==elt)
+                {
+                    arretes_voisines.push_back(elm.second);
+                }
+                if (m_vertices[elm.second.m_to]==elt)
+                {
+                    arretes_voisines.push_back(elm.second);
+                }
+            }
+            /**
+            std::map<Vertex,Edge> voisins;
+            Vertex* bidon = new Vertex;
+            unsigned int *kkk = new unsigned int;
+            *kkk=0;
+            for (auto &elm : bidon->m_in)
+            {
+                Vertex* new_sommet = new Vertex;
+                Edge* new_arrete = new Edge;
+                *new_arrete=m_edges[elm];
+                *new_sommet=new_arrete->m_from;
+                voisins[new_sommet]=*new_arrete;
+                delete new_arrete;
+                delete new_sommet;
+
+
+            }
+            for (auto &elm : bidon->m_out)
+            {
+                Vertex* new_sommet = new Vertex;
+                Edge* new_arrete = new Edge;
+                *new_arrete=m_edges[elm];
+                *new_sommet=new_arrete->m_to;
+                voisins[*new_sommet]=*new_arrete;
+                delete new_arrete;
+                delete new_sommet;
+            }
+            delete bidon;
+            for (auto &elm : voisins)
+            {
+                *kkk+=(elm.first.m_value)*(elm.second.m_weight);
+            }
+            **/
+            elt.second.k_capacite=*kkk;
+            elt.second.m_value=elt.second.m_value+elt.second.coeff_croissance*elt.second.m_value*(1-elt.second.m_value/elt.second.k_capacite);
+            delete kkk;
+        }
+    }
+}
