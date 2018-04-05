@@ -187,7 +187,7 @@ void Graph::make_example()
 }
 
 /// La méthode update à appeler dans la boucle de jeu pour les graphes avec interface
-void Graph::update(clock_t ini)
+void Graph::update(clock_t ini, bool animation)
 {
     if (!m_interface)
         return;
@@ -205,7 +205,10 @@ void Graph::update(clock_t ini)
 
     for (auto &elt : m_edges)
         elt.second.post_update();
+        if(animation)
+        {
     croissance_sommets(ini);
+        }
     if(key[KEY_SPACE])
     {
         ///Mettre au hasard la valeur des sommets
@@ -267,20 +270,21 @@ void Graph::croissance_sommets(clock_t temps)
             for(auto &elm : m_edges)
             {
                 ///Si l'arrête va vers le sommet
-                if (elm.second.m_from==elt.first)
+                if (elm.second.m_to==elt.first)
                 {
                     ///On l'ajoute au vecteur
                     arretes_arrivantes.push_back(elm.second);
                 }
                 ///Si l'arrête part du sommet
-                if (elm.second.m_to==elt.first)
+                if (elm.second.m_from==elt.first)
                 {
                     ///On l'ajoute au sommet
                     arretes_partantes.push_back(elm.second);
                 }
             }
             ///On crée un entier qu'on initialise à 0
-            unsigned int *kkk = new unsigned int;
+            int *k = new int;
+            *k=0;
             /**
             for (auto &elm : bidon->m_in)
             {
@@ -314,39 +318,34 @@ void Graph::croissance_sommets(clock_t temps)
             for (auto &elm : arretes_arrivantes)
             {
                 ///On ajoute le produit de son poids avec la valeur du sommet relié au coeff k
-                *kkk=*kkk+((elm.m_weight)*(m_vertices[elm.m_from].m_value));
+                *k+=((elm.m_weight)*(m_vertices[elm.m_from].m_value));
             }
-            ///Pour chaque arrête arrivantes
-            for (auto &elm : arretes_partantes)
-            {
-                ///On soustrait le produit de son poids avec le sommet relié au coeff k
-                *kkk=*kkk-((elm.m_weight)*(m_vertices[elm.m_to].m_value));
-            }
-
             ///Le coeff k du sommet prend la valeur de kkk
-            elt.second.k_capacite=*kkk;
-            if(elt.second.k_capacite==0)
-            {
-                elt.second.k_capacite=-1;
-            }
-            if(elt.second.m_value==100)
-            {
-                elt.second.k_capacite=-1;
-            }
+            elt.second.k_capacite=*k;
             ///Equation de dynamique de population si on a assez de population
-            if((elt.second.m_value>1)&&(elt.second.m_value<=100)&&(elt.second.k_capacite!=0))
+            if((elt.second.m_value>1)&&(elt.second.m_value<=100)&&(elt.second.k_capacite=0))
             {
                 elt.second.m_value=elt.second.m_value+(elt.second.coeff_croissance)*(elt.second.m_value)*(1-elt.second.m_value/elt.second.k_capacite);
+                for (auto &elm : arretes_partantes)
+                {
+                ///On soustrait le produit de son poids avec le sommet relié au coeff k
+                elt.second.m_value-=((elm.m_weight)*(m_vertices[elm.m_to].m_value));
+                }
+            }
+            if(elt.second.m_value<0)
+            {
+                elt.second.m_value=0;
+            }
+            if(elt.second.m_value>100)
+            {
+                elt.second.m_value=100;
             }
             if(elt.second.m_value==0)
             {
-                ///Mettre fonction enlever sommet
+                ///Croix rouge sur le sommet
             }
-            ///On libère la mémoire
-            delete kkk;
-            {
-                std::cout<<"Le sommet "<<elt.first<<" a comme coeff : "<<elt.second.k_capacite<<std::endl;
-            }
+                std::cout<<"Le sommet "<<elt.first<<" a comme valeur : "<<elt.second.m_value<<std::endl;
+            delete k;
         }
     }
 }

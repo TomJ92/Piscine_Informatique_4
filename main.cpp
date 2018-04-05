@@ -10,7 +10,7 @@ int main()
 {
         /// A appeler en 1er avant d'instancier des objets graphiques etc...
     grman::init();
-
+    bool animation=false;
     /// Le nom du répertoire où se trouvent les images à charger
     grman::set_pictures_path("pics");
 
@@ -26,9 +26,17 @@ int main()
     {
 
         /// Il faut appeler les méthodes d'update des objets qui comportent des widgets
-           g.update(temps_ini);
+           g.update(temps_ini,animation);
         /// Mise à jour générale (clavier/souris/buffer etc...)
         grman::mettre_a_jour();
+        if(key[KEY_1_PAD])
+        {
+            animation=true;
+        }
+        if(key[KEY_2_PAD])
+        {
+            animation=false;
+        }
         compteur++;
         if (compteur%30==0)
             temps_ini=temps_ini+1000;

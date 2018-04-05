@@ -139,7 +139,7 @@ class Vertex
         std::vector<int> m_out;
 
         /// un exemple de donnée associée à l'arc, on peut en ajouter d'autres...
-        double m_value;
+        unsigned int m_value;
         /// Cacapité de portage de l'environnement
         double k_capacite;
         /// Rythme de croissance
@@ -311,7 +311,7 @@ class Graph
 
 
         /// La méthode update à appeler dans la boucle de jeu pour les graphes avec interface
-        void update(clock_t ini);
+        void update(clock_t ini,bool animation);
         /// Augmente la capacité des sommets au cours du temps
         void croissance_sommets(clock_t temps);
         void random_num();
