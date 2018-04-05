@@ -221,7 +221,7 @@ class Edge
         int m_to;
 
         /// un exemple de donnée associée à l'arc, on peut en ajouter d'autres...
-        double m_weight;
+        int m_weight;
 
         /// le POINTEUR sur l'interface associée, nullptr -> pas d'interface
         std::shared_ptr<EdgeInterface> m_interface = nullptr;

@@ -40,8 +40,6 @@ int main()
         compteur++;
         if (compteur%30==0)
             temps_ini=temps_ini+1000;
-        std::cout<<(unsigned int)temps_ini/CLOCKS_PER_SEC<<std::endl;
-
     }
 
     grman::fermer_allegro();
