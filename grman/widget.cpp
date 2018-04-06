@@ -186,16 +186,8 @@ void WidgetText::set_message(std::string message)
 
 void WidgetCheckBox::draw()
 {
-    if (m_value)
-    {
-        thick_line(m_view, m_view->w/4, m_view->h/4,   m_view->w/2, m_view->h-3, 2, VERT );
-        thick_line(m_view, m_view->w-3, 0,            m_view->w/2, m_view->h-3, 2, VERT );
-    }
-    else
-    {
-        thick_line(m_view, 0, 0,           m_view->w, m_view->h, 2, ROUGE );
-        thick_line(m_view, 0, m_view->h,    m_view->w, 0,        2, ROUGE );
-    }
+    thick_line(m_view, 0, 0,           m_view->w, m_view->h, 1, BLANC );
+    thick_line(m_view, 0, m_view->h,    m_view->w, 0,        1, BLANC );
 
 }
 
@@ -403,7 +395,11 @@ void WidgetEdge::draw()
     }
 
 }
-
+///la fonction qui fait grossir les arêtes
+void WidgetEdge::grossir(double weight)
+{
+    m_thickness=1+(weight/30);
+}
 
 
 }

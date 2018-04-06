@@ -62,11 +62,86 @@
 	<iostream>
 	"MENU_FONCTIONS.h"
 
+<<<<<<< HEAD
 1523024064 source:c:\users\tom jouvet\documents\github\piscine_informatique_4\graph.cpp
 	"graph.h"
 	<ctime>
 
 1523016428 c:\users\tom jouvet\documents\github\piscine_informatique_4\graph.h
+=======
+1522795529 source:c:\users\ben\documents\github\piscine_informatique_4\grman\coords.cpp
+	"coords.h"
+
+1522795529 c:\users\ben\documents\github\piscine_informatique_4\grman\coords.h
+	<cmath>
+
+1522867118 source:c:\users\ben\documents\github\piscine_informatique_4\grman\grman.cpp
+	<cmath>
+	<unordered_map>
+	<unordered_set>
+	<utility>
+	<string>
+	<iostream>
+	<regex>
+	"grman.h"
+	<allegro.h>
+	<png.h>
+	<loadpng.h>
+	<jpgalleg.h>
+
+1522795529 c:\users\ben\documents\github\piscine_informatique_4\grman\grman.h
+	<allegro.h>
+	<string>
+	"grman_couleurs.h"
+	"coords.h"
+	"widget.h"
+
+1522795529 c:\users\ben\documents\github\piscine_informatique_4\grman\grman_couleurs.h
+
+1522880195 c:\users\ben\documents\github\piscine_informatique_4\grman\widget.h
+	"grman.h"
+	<iostream>
+	<string>
+	<vector>
+	<algorithm>
+	<allegro.h>
+
+1522920991 source:c:\users\ben\documents\github\piscine_informatique_4\main.cpp
+	"grman/grman.h"
+	<iostream>
+	"menu_fonctions.cpp"
+	"graph.h"
+
+1522871750 c:\users\ben\documents\github\piscine_informatique_4\menu_fonctions.cpp
+	"grman/grman.h"
+	<iostream>
+	"graph.h"
+	"MENU_FONCTIONS.h"
+
+1522795529 c:\users\ben\documents\github\piscine_informatique_4\menu_fonctions.h
+
+1522923025 c:\users\ben\documents\github\piscine_informatique_4\graph.h
+	<fstream>
+	<iostream>
+	<vector>
+	<map>
+	<string>
+	<memory>
+	"grman/grman.h"
+
+1522868439 source:c:\users\ben\documents\github\piscine_informatique_4\grman\widget.cpp
+	"widget.h"
+
+1522926770 source:c:\users\ben\documents\github\piscine_informatique_4\graph.cpp
+	"graph.h"
+
+1523027988 source:c:\users\tom jouvet\documents\github\piscine_informatique_4\graph.cpp
+	"graph.h"
+
+1523027929 c:\users\tom jouvet\documents\github\piscine_informatique_4\graph.h
+	<fstream>
+	<iostream>
+>>>>>>> master
 	<vector>
 	<map>
 	<string>
@@ -85,7 +160,11 @@
 1522783196 c:\users\tom jouvet\documents\github\piscine_informatique_4\grman\coords.h
 	<cmath>
 
+<<<<<<< HEAD
 1523006354 c:\users\tom jouvet\documents\github\piscine_informatique_4\grman\widget.h
+=======
+1523027016 c:\users\tom jouvet\documents\github\piscine_informatique_4\grman\widget.h
+>>>>>>> master
 	"grman.h"
 	<iostream>
 	<string>
@@ -110,14 +189,22 @@
 	<loadpng.h>
 	<jpgalleg.h>
 
+<<<<<<< HEAD
 1523006354 source:c:\users\tom jouvet\documents\github\piscine_informatique_4\grman\widget.cpp
 	"widget.h"
 
 1523017005 source:c:\users\tom jouvet\documents\github\piscine_informatique_4\main.cpp
+=======
+1523027016 source:c:\users\tom jouvet\documents\github\piscine_informatique_4\grman\widget.cpp
+	"widget.h"
+
+1523027016 source:c:\users\tom jouvet\documents\github\piscine_informatique_4\main.cpp
+>>>>>>> master
 	"grman/grman.h"
 	<iostream>
 	"menu_fonctions.cpp"
 	"graph.h"
+<<<<<<< HEAD
 	"CROISSANCE_POPULATION.h"
 	<time.h>
 	<ctime>
@@ -130,4 +217,14 @@
 1522783196 c:\users\tom jouvet\documents\github\piscine_informatique_4\menu_fonctions.h
 
 1523006354 c:\users\tom jouvet\documents\github\piscine_informatique_4\croissance_population.h
+=======
+
+1523027913 c:\users\tom jouvet\documents\github\piscine_informatique_4\menu_fonctions.cpp
+	"grman/grman.h"
+	<iostream>
+	"graph.h"
+	"MENU_FONCTIONS.h"
+
+1523026885 c:\users\tom jouvet\documents\github\piscine_informatique_4\menu_fonctions.h
+>>>>>>> master
 
