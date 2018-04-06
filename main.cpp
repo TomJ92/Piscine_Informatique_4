@@ -18,7 +18,7 @@ int main()
     Graph g;
     g.make_example();
     clock_t temps_ini;
-    temps_ini=clock();
+    temps_ini=(double)clock();
     unsigned int compteur=0;
     /// Vous gardez la main sur la "boucle de jeu"
     /// ( contrairement à des frameworks plus avancés )

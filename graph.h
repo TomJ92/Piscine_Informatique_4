@@ -139,7 +139,7 @@ class Vertex
         std::vector<int> m_out;
 
         /// un exemple de donnée associée à l'arc, on peut en ajouter d'autres...
-        unsigned int m_value;
+        int m_value;
         /// Cacapité de portage de l'environnement
         double k_capacite;
         /// Rythme de croissance

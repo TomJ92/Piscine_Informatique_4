@@ -214,6 +214,13 @@ void Graph::update(clock_t ini, bool animation)
         ///Mettre au hasard la valeur des sommets
         random_num();
     }
+    if(key[KEY_R])
+    {
+        for(auto &elm : m_edges)
+        {
+            elm.second.m_weight=0;
+        }
+    }
 }
 
 /// Aide à l'ajout de sommets interfacés
@@ -253,8 +260,7 @@ void Graph::add_interfaced_edge(int idx, int id_vert1, int id_vert2, double weig
     m_vertices[id_vert1].m_out.push_back(idx);
 
     m_vertices[id_vert2].m_in.push_back(idx);
-m_edges[idx].m_from = id_vert1;
-
+    m_edges[idx].m_from = id_vert1;
     m_edges[idx].m_to = id_vert2;
 }
 ///Dynamique de populations du graphe
@@ -268,7 +274,7 @@ void Graph::croissance_sommets(clock_t temps)
         {
 
             ///Définir son rythme de croissance
-            elt.second.coeff_croissance=0.001;
+            elt.second.coeff_croissance=0.00000000001;
             ///On crée deux tableaux de vecteurs
             std::vector<Edge> arretes_arrivantes;
             std::vector<Edge> arretes_partantes;
@@ -278,23 +284,25 @@ void Graph::croissance_sommets(clock_t temps)
 
                 if(elt.first==elm.second.m_to)
                 {
-                arretes_arrivantes.push_back(elm.second);
-                }
-                if(elt.first==elm.second.m_from)
-                    arretes_partantes.push_back(elm.second);
-                ///Si l'arrête va vers le sommet
-                elt.second.k_capacite=0;
-               /** if (elm.second.m_to==elt.first)
-                {
-                    ///On l'ajoute au vecteur
                     arretes_arrivantes.push_back(elm.second);
                 }
-                ///Si l'arrête part du sommet
-                if (elm.second.m_from==elt.first)
+                if(elt.first==elm.second.m_from)
                 {
-                    ///On l'ajoute au sommet
                     arretes_partantes.push_back(elm.second);
-                }**/
+                }
+                ///Si l'arrête va vers le sommet
+                elt.second.k_capacite=0;
+                /** if (elm.second.m_to==elt.first)
+                 {
+                     ///On l'ajoute au vecteur
+                     arretes_arrivantes.push_back(elm.second);
+                 }
+                 ///Si l'arrête part du sommet
+                 if (elm.second.m_from==elt.first)
+                 {
+                     ///On l'ajoute au sommet
+                     arretes_partantes.push_back(elm.second);
+                 }**/
             }
             ///On crée un entier qu'on initialise à 0
             /**
@@ -327,20 +335,24 @@ void Graph::croissance_sommets(clock_t temps)
             }
             **/
             ///Pour chaque arrête arrivantes
-            for (auto elm : arretes_arrivantes)
+            std::cout<<"Sommet : "<<elt.first<<std::endl;
+            for (auto &elm : arretes_arrivantes)
             {
                 ///On ajoute le produit de son poids avec la valeur du sommet relié au coeff k
-                std::cout<<"Poids : "<<elm.m_weight<<". Nombre: "<<m_vertices[elm.m_from].m_value<<std::endl;
-                elt.second.k_capacite=elt.second.k_capacite+((elm.m_weight)*(m_vertices[elm.m_from].m_value));
+                elt.second.k_capacite+=((elm.m_weight)*(m_vertices[elm.m_from].m_value));
+            }
+            if(elt.second.k_capacite==0)
+            {
+                elt.second.k_capacite=1+rand()%4;
             }
             ///Equation de dynamique de population si on a assez de population
-            if((elt.second.m_value>1)&&(elt.second.m_value<100)&&(elt.second.k_capacite!=0))
+            if((elt.second.m_value>1)&&(elt.second.m_value<=100)&&(elt.second.k_capacite!=0))
             {
-                elt.second.m_value=elt.second.m_value+(elt.second.coeff_croissance)*(elt.second.m_value)*(1-((elt.second.m_value)/(elt.second.k_capacite)));
+                std::cout<<"k vaut "<<elt.second.k_capacite<<std::endl;
+                elt.second.m_value+=(elt.second.coeff_croissance)*(elt.second.m_value)*(1-((elt.second.m_value)/(elt.second.k_capacite)));
                 for (auto &elm : arretes_partantes)
                 {
                     ///On soustrait le produit de son poids avec le sommet relié au coeff k
-                    std::cout<<"OKOKOKOKOOKOKOK"<<std::endl;
                     elt.second.m_value-=(elm.m_weight)*(m_vertices[elm.m_to].m_value);
                 }
             }
@@ -356,10 +368,7 @@ void Graph::croissance_sommets(clock_t temps)
             {
                 ///Croix rouge sur le sommet
             }
-            if(elt.second.m_value==100)
-            {
-                elt.second.m_value=2;
-            }
+            elt.second.k_capacite=0;
         }
     }
 }
@@ -368,5 +377,9 @@ void Graph::random_num()
     for (auto &elm : m_vertices)
     {
         elm.second.m_value=rand()%100;
+    }
+    for (auto &elm : m_edges)
+    {
+        elm.second.m_weight=rand()%100;
     }
 }
