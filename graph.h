@@ -288,7 +288,8 @@ class Graph
 
         /// La liste des sommets
         std::map<int, Vertex> m_vertices;
-
+        ///Valeur pour le chart
+        std::map<int,int> m_chart;
         /// le POINTEUR sur l'interface associée, nullptr -> pas d'interface
         std::shared_ptr<GraphInterface> m_interface = nullptr;
 
@@ -318,6 +319,7 @@ class Graph
         void random_num();
         ///Calcul le coefficient k d'un sommet donné
         double calculK(std::vector<Edge> ar_arriv);
+        double calcul_coeff_out(std::vector<Edge> arr_part, double k_coeff);
 
 };
 

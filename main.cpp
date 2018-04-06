@@ -41,7 +41,7 @@ int main()
         if (compteur%30==0)
             temps_ini=temps_ini+1000;
     }
-
+    al_
     grman::fermer_allegro();
     afficher();
     return 0;
