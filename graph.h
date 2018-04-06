@@ -114,6 +114,11 @@ class VertexInterface
 
         // Une boite pour le label précédent
         grman::WidgetText m_box_label_idx;
+        ///croix pour supprimer un sommets
+        grman::WidgetCheckBox m_cross;
+        ///bouton pour savoir quelle sommets pour les arêtes
+        grman::WidgetButton m_button_addEdge;
+
 
     public :
 
@@ -193,12 +198,16 @@ class EdgeInterface
 
         // Un label de visualisation du poids de l'arc
         grman::WidgetText m_label_weight;
+        ///croix pour supprimer les arêtes
+        grman::WidgetCheckBox m_cross;
+        ///texte pour afficher les numéro de sommet de l'arête
+        grman::WidgetText m_text_number;
 
     public :
 
         // Le constructeur met en place les éléments de l'interface
         // voir l'implémentation dans le .cpp
-        EdgeInterface(Vertex& from, Vertex& to);
+        EdgeInterface(Vertex& from, Vertex& to,int numS1, int numS2);
 };
 
 
@@ -223,6 +232,7 @@ class Edge
         std::shared_ptr<EdgeInterface> m_interface = nullptr;
 
 
+
     public:
 
         /// Les constructeurs sont à compléter selon vos besoin...
@@ -235,6 +245,7 @@ class Edge
         /// Voir l'implémentation Graph::update dans le .cpp
         void pre_update();
         void post_update();
+        ///accesseurs
         int getFrom() { return m_from; }
         int getTo() { return m_to; }
         void setFrom(int from) {m_from=from;}
@@ -271,10 +282,26 @@ class GraphInterface
 
         // A compléter éventuellement par des widgets de décoration ou
         // d'édition (boutons ajouter/enlever ...)
+        ///bouton pour sauver avec le texte
         grman::WidgetButton m_button_save;
         grman::WidgetText m_text_save;
+        ///bouton pour reset les postion et les sommets de notre graphe
         grman::WidgetButton m_button_reset;
         grman::WidgetText m_text_reset;
+        ///bouton pour quitter notre graphe
+        grman::WidgetButton m_button_quit;
+        grman::WidgetText m_text_quit;
+        ///bouton pour ajouter un sommet
+        grman::WidgetButton m_button_addVertex;
+        grman::WidgetText m_text_addV;
+        grman::WidgetText m_text_vertex;
+        ///bouton pour ajouter une arête
+        grman::WidgetButton m_button_addEdge;
+        grman::WidgetText m_text_addE;
+        grman::WidgetText m_text_edge;
+        ///bouton pour ne plus ajouter sommet
+        grman::WidgetButton m_button_noAddEdge;
+
 
     public :
 
@@ -303,8 +330,22 @@ class Graph
         ///nb d'arête du graphe
         int m_nbArete;
 
+        ///NUMERO DU GRAPHE
+        int m_numGraphe;
 
-        ///
+        ///boléen pour quitter le graphe
+        bool m_quitGraphe;
+
+        ///boléen qui dit si on doit ajouter une arête
+        bool m_ajouterNewEdge;
+
+        ///SAVOIR LES SOMMET QUI VONT FORMER UNE ARRËTE
+        ///savoir si on ajoute le sommet1 ou 2
+        bool m_addTo;
+        bool m_addFrom;
+        std::vector<int> m_vertexForNewEdge;
+        ///pour éviter de selectionner 2 fois le même sommets
+        int m_vertexAlreadyUse;
 
     public:
 
@@ -313,7 +354,7 @@ class Graph
         Graph (GraphInterface *interface=nullptr) :
             m_interface(interface)  {  }
 
-        void add_interfaced_vertex(int idx, double value, int x, int y, std::string pic_name="", int pic_idx=0 );
+        void add_interfaced_vertex(int idx, double value, int x, int y, std::string pic_name="",int pic_idx=0 );
         void add_interfaced_edge(int idx, int vert1, int vert2, double weight=0);
 
         /// Méthode spéciale qui construit un graphe arbitraire (démo)
@@ -326,11 +367,26 @@ class Graph
         /// La méthode update à appeler dans la boucle de jeu pour les graphes avec interface
         void update();
         ///ss prog qui remplit un graphe en fonction d'un fichier
-        void ReadFile(std::string fileName);
+        void ReadFile(std::string fileName, int num);
         ///ss prog qui sauve un graphe en remplissant un fichier
         void saveFile(std::string fileName);
         ///réinitialise les sommet à leurs position de départ
         void reinit(std::string fileName);
+        ///initialisation du graphe
+        void initialisation();
+        ///setter
+        bool getQuitGraph() {return m_quitGraphe;}
+        void setQuitGraph(bool quitGraph) {m_quitGraphe=quitGraph; }
+        ///enlever un sommet
+        void removeVertex(int num);
+        ///enlever une arête
+        void removeEdge(int num);
+        ///ajouter un sommet
+        void addVertex();
+        ///ajouter une arête
+        void addEdge(std::vector<int> m_newVertexForEdge);
+        ///mettre tout les bouton à false
+        void initButton();
 };
 
 
