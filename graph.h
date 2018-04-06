@@ -143,22 +143,12 @@ private :
 
     /// liste des indices des arcs partant du sommet : accÃ¨s aux successeurs
     std::vector<int> m_out;
-
-<<<<<<< HEAD
         /// un exemple de donnée associée à l'arc, on peut en ajouter d'autres...
         double m_value;
         /// Cacapité de portage de l'environnement
         double k_capacite;
         /// Rythme de croissance
         double coeff_croissance;
-=======
-    /// un exemple de donnÃ©e associÃ©e Ã  l'arc, on peut en ajouter d'autres...
-    double m_value;
-    /// CacapitÃ© de portage de l'environnement
-    double k_capacite;
-    /// Rythme de croissance
-    double coeff_croissance;
->>>>>>> master
 
     /// le POINTEUR sur l'interface associÃ©e, nullptr -> pas d'interface
     std::shared_ptr<VertexInterface> m_interface = nullptr;
@@ -230,22 +220,6 @@ class Edge
     // directement aux attributs (y compris privÃ©s)
     friend class Graph;
     friend class EdgeInterface;
-
-<<<<<<< HEAD
-    private :
-        /// indice du sommet de départ de l'arc
-        int m_from;
-
-        /// indice du sommet d'arrivée de l'arc
-        int m_to;
-
-        /// un exemple de donnée associée à l'arc, on peut en ajouter d'autres...
-        int m_weight;
-
-        /// le POINTEUR sur l'interface associée, nullptr -> pas d'interface
-        std::shared_ptr<EdgeInterface> m_interface = nullptr;
-
-=======
 private :
     /// indice du sommet de dÃ©part de l'arc
     int m_from;
@@ -290,7 +264,6 @@ public:
     {
         m_to=to;
     }
->>>>>>> master
 
 };
 
@@ -354,48 +327,6 @@ public :
 
 class Graph
 {
-<<<<<<< HEAD
-    private :
-
-        /// La "liste" des arêtes
-        std::map<int, Edge> m_edges;
-
-        /// La liste des sommets
-        std::map<int, Vertex> m_vertices;
-        ///Valeur pour le chart
-        std::map<int,int> m_chart;
-        /// le POINTEUR sur l'interface associée, nullptr -> pas d'interface
-        std::shared_ptr<GraphInterface> m_interface = nullptr;
-
-
-    public:
-
-        /// Les constructeurs sont à compléter selon vos besoin...
-        /// Ici on ne donne qu'un seul constructeur qui peut utiliser une interface
-        Graph (GraphInterface *interface=nullptr) :
-            m_interface(interface)  {  }
-
-        void add_interfaced_vertex(int idx, double value, int x, int y, std::string pic_name="", int pic_idx=0 );
-        void add_interfaced_edge(int idx, int vert1, int vert2, double weight=0);
-
-        /// Méthode spéciale qui construit un graphe arbitraire (démo)
-        /// Voir implémentation dans le .cpp
-        /// Cette méthode est à enlever et remplacer par un système
-        /// de chargement de fichiers par exemple.
-        void make_example();
-
-
-        /// La méthode update à appeler dans la boucle de jeu pour les graphes avec interface
-        void update(clock_t ini,bool animation);
-        /// Augmente la capacité des sommets au cours du temps
-        void croissance_sommets(clock_t temps);
-        ///Randomise les valeurs des sommets et des arrêtes
-        void random_num();
-        ///Calcul le coefficient k d'un sommet donné
-        double calculK(std::vector<Edge> ar_arriv);
-        double calcul_coeff_out(std::vector<Edge> arr_part, double k_coeff);
-
-=======
 private :
 
     /// La "liste" des arÃªtes
@@ -490,7 +421,6 @@ public:
     ///ajouter une combinaison
     void addCombi(int i);
     void initia();
->>>>>>> master
 };
 
 
