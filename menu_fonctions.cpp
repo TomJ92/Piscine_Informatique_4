@@ -97,13 +97,18 @@ void afficher()
         case 0:
             break;
         case 1 :
+            {
             g.ReadFile("Graphe1",1);
+            clock_t temps_ini;
+            bool animation=false;
+            temps_ini=(double)clock();
+            unsigned int compteur=0;
             /// Vous gardez la main sur la "boucle de jeu"
             /// ( contrairement à des frameworks plus avancés )
             while ( !g.getQuitGraph() )
             {
                 /// Il faut appeler les méthodes d'update des objets qui comportent des widgets
-                g.update();
+                g.update(temps_ini,animation);
                 /// Mise à jour générale (clavier/souris/buffer etc...)
                 grman::mettre_a_jour();
                 if(key[KEY_S])
@@ -111,38 +116,84 @@ void afficher()
                     g.addVertex();
                     rest(300);
                 }
+                if(key[KEY_1_PAD])
+                {
+                    animation=true;
+                }
+                if(key[KEY_2_PAD])
+                {
+                    animation=false;
+                }
+                compteur++;
+                if (compteur%30==0)
+                    temps_ini=temps_ini+1000;
             }
             g.initialisation();
             rest(300);
             break;
+            }
         case 2:
+            {
+            clock_t temps_ini;
+            unsigned int compteur=0;
+            temps_ini=(double)clock();
+            bool animation=false;
             g.ReadFile("Graphe2",2);
             /// Vous gardez la main sur la "boucle de jeu"
             /// ( contrairement à des frameworks plus avancés )
             while ( !g.getQuitGraph() )
             {
                 /// Il faut appeler les méthodes d'update des objets qui comportent des widgets
-                g.update();
+                g.update(temps_ini,animation);
                 /// Mise à jour générale (clavier/souris/buffer etc...)
                 grman::mettre_a_jour();
+                if(key[KEY_1_PAD])
+                {
+                    animation=true;
+                }
+                if(key[KEY_2_PAD])
+                {
+                    animation=false;
+                }
+                compteur++;
+                if (compteur%30==0)
+                    temps_ini=temps_ini+1000;
             }
             g.initialisation();
             rest(300);
             break;
+            }
         case 3:
+            {
+            clock_t temps_ini;
+            unsigned int compteur=0;
+            temps_ini=(double)clock();
+            bool animation=false;
             g.ReadFile("Graphe3",3);
             /// Vous gardez la main sur la "boucle de jeu"
             /// ( contrairement à des frameworks plus avancés )
             while ( !g.getQuitGraph() )
             {
                 /// Il faut appeler les méthodes d'update des objets qui comportent des widgets
-                g.update();
+                g.update(temps_ini,animation);
                 /// Mise à jour générale (clavier/souris/buffer etc...)
                 grman::mettre_a_jour();
+                if(key[KEY_1_PAD])
+                {
+                    animation=true;
+                }
+                if(key[KEY_2_PAD])
+                {
+                    animation=false;
+                }
+                compteur++;
+                if (compteur%30==0)
+                    temps_ini=temps_ini+1000;
             }
             g.initialisation();
             rest(300);
             break;
+            }
         ///Si on clique sur "Explications"
         case 4:
             regles();

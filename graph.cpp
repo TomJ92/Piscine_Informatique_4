@@ -247,7 +247,7 @@ GraphInterface::GraphInterface(int x, int y, int w, int h)
     m_tool_box.add_child(m_button_noAddEdge);
     m_button_noAddEdge.set_dim(7,7);
     m_button_noAddEdge.set_pos(68,175);
-    m_button_noAddEdge.set_bg_color(BLEUSOMBRE);
+    m_button_noAddEdge.set_bg_color(ROUGE);
 
 }
 
@@ -501,7 +501,7 @@ void Graph::saveFile(std::string fileName)
 }
 
 /// La méthode update à appeler dans la boucle de jeu pour les graphes avec interface
-void Graph::update()
+void Graph::update(clock_t ini, bool animation)
 {
     if (!m_interface)
         return;
@@ -678,7 +678,22 @@ void Graph::update()
         m_interface->m_button_noAddEdge.set_value(false);
         std::cout<<"Vous n'ajoutez plus une nouvelle arete"<<std::endl;
     }
-
+        if(animation)
+    {
+        croissance_sommets(ini);
+    }
+    if(key[KEY_SPACE])
+    {
+        ///Mettre au hasard la valeur des sommets
+        random_num();
+    }
+    if(key[KEY_R])
+    {
+        for(auto &elm : m_edges)
+        {
+            elm.second.m_weight=0;
+        }
+    }
 }
 
 ///la méthode qui ajoute une arete
@@ -738,7 +753,7 @@ void Graph::addVertex()
 {
     ///on regarde l'indice le plus grand de la map d'arete
     int indice;
-    int number1;
+    //int number1;
     std::string name;
     std::string number;
     std::string picName="clown1.jpg";
@@ -876,4 +891,165 @@ void Graph::add_interfaced_edge(int idx, int id_vert1, int id_vert2, double weig
     m_vertices[id_vert2].m_in.push_back(idx);
 
 
+}
+///Dynamique de populations du graphe
+void Graph::croissance_sommets(clock_t temps)
+{
+    ///Toutes les 5 secondes
+   /// if (((temps/CLOCKS_PER_SEC)%1==0)&&(temps/CLOCKS_PER_SEC!=0))
+    if (key[KEY_7])
+    {
+        ///Pour chaque sommet
+        for (auto &elt : m_vertices)
+        {
+            ///On crée deux tableaux de vecteurs
+            std::vector<Edge> arretes_arrivantes;
+            std::vector<Edge> arretes_partantes;
+            ///Pour chaque arrête
+            for(auto &elm : m_edges)
+            {
+
+                if(elt.first==elm.second.m_to)
+                {
+                    arretes_arrivantes.push_back(elm.second);
+                }
+                if(elt.first==elm.second.m_from)
+                {
+                    arretes_partantes.push_back(elm.second);
+                }
+                ///Si l'arrête va vers le sommet
+                elt.second.k_capacite=0;
+                /** if (elm.second.m_to==elt.first)
+                 {
+                     ///On l'ajoute au vecteur
+                     arretes_arrivantes.push_back(elm.second);
+                 }
+                 ///Si l'arrête part du sommet
+                 if (elm.second.m_from==elt.first)
+                 {
+                     ///On l'ajoute au sommet
+                     arretes_partantes.push_back(elm.second);
+                 }**/
+            }
+            ///On crée un entier qu'on initialise à 0
+            /**
+            for (auto &elm : bidon->m_in)
+            {
+                Vertex* new_sommet = new Vertex;
+                Edge* new_arrete = new Edge;
+                *new_arrete=m_edges[elm];
+                *new_sommet=new_arrete->m_from;
+                voisins[new_sommet]=*new_arrete;
+                delete new_arrete;
+                delete new_sommet;
+
+
+            }
+            for (auto &elm : bidon->m_out)
+            {
+                Vertex* new_som0met = new Vertex;
+                Edge* new_arrete = new Edge;
+                *new_arrete=m_edges[elm];
+                *new_sommet=new_arrete->m_to;
+                voisins[*new_sommet]=*new_arrete;
+                delete new_arrete;
+                delete new_sommet;
+            }
+            delete bidon;
+            for (auto &elm : voisins)
+            {
+                *kkk+=(elm.first.m_value)*(elm.second.m_weight);
+            }
+            **/
+            ///Pour chaque arrête arrivantes
+            std::cout<<"Sommet : "<<elt.first<<std::endl;
+            elt.second.k_capacite=calculK(arretes_arrivantes);
+            double coeff_out=0;
+            if(elt.second.k_capacite==0)
+            {
+                    elt.second.k_capacite=-1;
+            }
+            coeff_out=calcul_coeff_out(arretes_partantes,elt.second.k_capacite);
+            ///Equation de dynamique de population si on a assez de population
+            if((elt.second.m_value>1)&&(elt.second.m_value<100)&&(elt.second.k_capacite!=0))
+            {
+                std::cout<<"k vaut "<<elt.second.k_capacite<<std::endl;
+                std::cout<<"Valeur pop AVANT : "<<elt.second.m_value<<std::endl;
+                elt.second.m_value+=(elt.second.coeff_croissance)*(elt.second.m_value)*(1-((elt.second.m_value)/(elt.second.k_capacite)));
+                std::cout<<"Valeur pop APRES1 : "<<elt.second.m_value<<std::endl;
+                for (auto &elm : arretes_partantes)
+                {
+                    ///On soustrait le produit de son poids avec le sommet relié au coeff k
+                elt.second.m_value-=(coeff_out)*(elm.m_weight)*(m_vertices[elm.m_to].m_value);
+                }
+                std::cout<<" Coeffout : "<<coeff_out<<std::endl;
+                std::cout<<"Valeur pop APRES2: "<<elt.second.m_value<<std::endl;
+            }
+            ///Si valeur supérieur à 100
+            if (elt.second.m_value>100)
+            {
+                ///On ramène à 100
+                elt.second.m_value=100;
+            }
+            ///Si ça vaut 100
+            if((elt.second.m_value==100)&&elt.second.k_capacite)
+            {
+                elt.second.coeff_croissance=-0.0003;
+                elt.second.m_value+=(elt.second.coeff_croissance)*(elt.second.m_value)*(1-((elt.second.m_value)/(elt.second.k_capacite)));
+                for (auto &elm : arretes_partantes)
+                {
+                    ///On soustrait le produit de son poids avec le sommet relié au coeff k
+                elt.second.m_value-=(coeff_out)*(elm.m_weight/100)*(m_vertices[elm.m_to].m_value);
+                }
+            }
+            if(elt.second.m_value<=1)
+            {
+                elt.second.m_value=0;
+            }
+            if(elt.second.m_value<0)
+            {
+                elt.second.m_value=0;
+                ///Croix rouge sur le sommet
+            }
+            elt.second.k_capacite=0;
+        }
+    }
+}
+void Graph::random_num()
+{
+    for (auto &elm : m_vertices)
+    {
+        elm.second.m_value=rand()%100;
+    }
+    for (auto &elm : m_edges)
+    {
+        elm.second.m_weight=rand()%100;
+    }
+}
+double Graph::calculK(std::vector<Edge> ar_arriv)
+{
+    double *k = new double;
+    *k=0;
+    for(auto &elm : ar_arriv)
+    {
+        *k+=(elm.m_weight/100)*(m_vertices[elm.m_from].m_value);
+    }
+    return *k;
+    delete k;
+}
+double Graph::calcul_coeff_out(std::vector<Edge> arr_part, double k_coeff)
+{
+    double k = 0;
+    for(auto &elm : arr_part)
+    {
+        k+=(m_vertices[elm.m_to].m_value)*(elm.m_weight/100)*(m_vertices[elm.m_to].k_capacite);
+    }
+    return k;
+}
+void Graph::initia()
+{
+    for(auto &elm : m_vertices)
+    {
+        elm.second.coeff_croissance=0;
+    }
 }
