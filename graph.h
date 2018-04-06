@@ -139,7 +139,7 @@ class Vertex
         std::vector<int> m_out;
 
         /// un exemple de donnée associée à l'arc, on peut en ajouter d'autres...
-        int m_value;
+        double m_value;
         /// Cacapité de portage de l'environnement
         double k_capacite;
         /// Rythme de croissance
@@ -314,7 +314,10 @@ class Graph
         void update(clock_t ini,bool animation);
         /// Augmente la capacité des sommets au cours du temps
         void croissance_sommets(clock_t temps);
+        ///Randomise les valeurs des sommets et des arrêtes
         void random_num();
+        ///Calcul le coefficient k d'un sommet donné
+        double calculK(std::vector<Edge> ar_arriv);
 
 };
 

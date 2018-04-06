@@ -274,7 +274,7 @@ void Graph::croissance_sommets(clock_t temps)
         {
 
             ///Définir son rythme de croissance
-            elt.second.coeff_croissance=0.00000000001;
+            elt.second.coeff_croissance=0.00000000000000000000000000000000000000000000000000000000000000000001;
             ///On crée deux tableaux de vecteurs
             std::vector<Edge> arretes_arrivantes;
             std::vector<Edge> arretes_partantes;
@@ -336,36 +336,30 @@ void Graph::croissance_sommets(clock_t temps)
             **/
             ///Pour chaque arrête arrivantes
             std::cout<<"Sommet : "<<elt.first<<std::endl;
-            for (auto &elm : arretes_arrivantes)
-            {
-                ///On ajoute le produit de son poids avec la valeur du sommet relié au coeff k
-                elt.second.k_capacite+=((elm.m_weight)*(m_vertices[elm.m_from].m_value));
-            }
+            elt.second.k_capacite=calculK(arretes_arrivantes);
             if(elt.second.k_capacite==0)
             {
                 elt.second.k_capacite=1+rand()%4;
             }
             ///Equation de dynamique de population si on a assez de population
-            if((elt.second.m_value>1)&&(elt.second.m_value<=100)&&(elt.second.k_capacite!=0))
+            if((elt.second.m_value>1)&&(elt.second.k_capacite!=0))
             {
+                elt.second.k_capacite;
                 std::cout<<"k vaut "<<elt.second.k_capacite<<std::endl;
                 elt.second.m_value+=(elt.second.coeff_croissance)*(elt.second.m_value)*(1-((elt.second.m_value)/(elt.second.k_capacite)));
                 for (auto &elm : arretes_partantes)
                 {
                     ///On soustrait le produit de son poids avec le sommet relié au coeff k
-                    elt.second.m_value-=(elm.m_weight)*(m_vertices[elm.m_to].m_value);
+                    elt.second.m_value-=(elt.second.coeff_croissance)*(elm.m_weight)*(m_vertices[elm.m_to].m_value);
                 }
             }
-            if(elt.second.m_value<1)
+            if(elt.second.m_value<=1)
             {
                 elt.second.m_value=0;
             }
-            if(elt.second.m_value>100)
+            if(elt.second.m_value<0)
             {
-                elt.second.m_value=100;
-            }
-            if(elt.second.m_value==0)
-            {
+                elt.second.m_value=0;
                 ///Croix rouge sur le sommet
             }
             elt.second.k_capacite=0;
@@ -382,4 +376,15 @@ void Graph::random_num()
     {
         elm.second.m_weight=rand()%100;
     }
+}
+double Graph::calculK(std::vector<Edge> ar_arriv)
+{
+    double *k = new double;
+    *k=0;
+    for(auto &elm : ar_arriv)
+    {
+        *k+=(elm.m_weight)*(m_vertices[elm.m_from].m_value);
+    }
+    return *k;
+    delete k;
 }
