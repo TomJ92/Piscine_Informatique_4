@@ -902,8 +902,8 @@ void Graph::add_interfaced_edge(int idx, int id_vert1, int id_vert2, double weig
 void Graph::croissance_sommets(clock_t temps)
 {
     ///Toutes les 5 secondes
-   // if (((temps/CLOCKS_PER_SEC)%1==0)&&(temps/CLOCKS_PER_SEC!=0))
-    if (key[KEY_7])
+    if (((temps/CLOCKS_PER_SEC)%2==0)&&(temps/CLOCKS_PER_SEC!=0))
+    ///if (key[KEY_7])
     {
         ///Pour chaque sommet
         for (auto &elt : m_vertices)
@@ -911,7 +911,7 @@ void Graph::croissance_sommets(clock_t temps)
             ///On crée deux tableaux de vecteurs
             std::vector<Edge> arretes_arrivantes;
             std::vector<Edge> arretes_partantes;
-            elt.second.coeff_croissance=0.001;
+            elt.second.coeff_croissance=0.0001;
             ///Pour chaque arrête
             for(auto &elm : m_edges)
             {
@@ -1029,50 +1029,159 @@ void Graph::croissance_sommets(clock_t temps)
             }
             **/
             ///Pour chaque arrête arrivantes
+            unsigned int nombre_arrivantes=0;
+            for(auto &lol : arretes_arrivantes)
+            {
+                ///Si la pop du sommet n'est pas égale à 0
+                if(m_vertices[lol.m_from].m_value!=0)
+                {
+                    nombre_arrivantes++; ///On a une population qui influe
+                }
+            }
             std::cout<<"Sommet : "<<elt.first<<std::endl;
             elt.second.k_capacite=calculK(arretes_arrivantes);
             double coeff_out=0;
+            unsigned int nombre_partantes=0;
             for(auto &elm : arretes_partantes)
             {
-                if(m_vertices[elm.m_to].k_capacite!=0)
+                ///Si la pop du sommet
+                if (m_vertices[elm.m_to].m_value!=0)
+                {
+                    nombre_partantes++;
+                }
                 coeff_out+=(m_vertices[elm.m_to].m_value)*(m_vertices[elm.m_to].k_capacite);
             }
-                            std::cout<<"k vaut "<<elt.second.k_capacite<<std::endl;
-            ///Equation de dynamique de population si on a assez de population
-            if((elt.second.m_value>1)&&(elt.second.m_value<100)&&(elt.second.k_capacite!=0))
+           /// bool arrivOK = false;
+           /// bool partOK=false;
+            /**
+            if(nombre_arrivantes!=0)
+            {
+              arrivOK=true;
+                std::cout<<"A VRAI"<<std::endl;
+            }
+            else if(nombre_arrivantes==0)
+            {
+                arrivOK=false;
+                std::cout<<"A FAUX"<<std::endl;
+            }
+            if(nombre_partantes!=0)
+            {
+                partOK=false;
+                std::cout<<"P FAUX"<<std::endl;
+            }
+            else if(nombre_partantes==0)
+            {
+                partOK=true;
+                std::cout<<"P VRAI"<<std::endl;
+            }
+            ///Proies et prédateurs présents = population varie selon proies et prédateurs
+            if((elt.second.m_value>1)&&(elt.second.m_value<100)&&(!arrivOK)&&(nombre_partantes!=0))
+            {
+                std::cout<<"LES DEUX"<<std::endl;
+                if(elt.second.k_capacite!=0)
+                {
+                    elt.second.k_capacite=50;
+                }
+                elt.second.m_value+=(elt.second.coeff_croissance)*(elt.second.m_value)*(1-((elt.second.m_value)/(elt.second.k_capacite)));
+                for (auto &elm : arretes_partantes)
+                {
+                    ///On soustrait le produit de son poids avec le sommet reliÃ© au coeff k
+                    elt.second.m_value-=0.000015*(elm.m_weight)*(m_vertices[elm.m_to].m_value);
+                }
+            }
+            ///Proies et pas de prédateurs = population augmente beaucoup
+            else if((elt.second.m_value>1)&&(elt.second.m_value<100)&&(nombre_arrivantes=0)&&(nombre_partantes!=0))
+            {
+                std::cout<<"PROIES"<<std::endl;
+                if(elt.second.k_capacite==0)
+                {
+                    elt.second.k_capacite=100000000;
+                }
+                elt.second.coeff_croissance*=10;
+                elt.second.m_value+=(elt.second.coeff_croissance)*(elt.second.m_value)*(1-((elt.second.m_value)/(elt.second.k_capacite)));
+            }
+            ///Pas de proies et prédateurs = population diminue beaucoup
+            else if((elt.second.m_value>1)&&(elt.second.m_value<100)&&(nombre_arrivantes!=0)&&(nombre_partantes=0))
+            {
+                std::cout<<"PREDA"<<std::endl;
+                elt.second.k_capacite=0.00001;
+                elt.second.coeff_croissance*=10;
+                elt.second.m_value+=(elt.second.coeff_croissance)*(elt.second.m_value)*(1-((elt.second.m_value)/(elt.second.k_capacite)));
+                for (auto &elm : arretes_partantes)
+                {
+                    ///On soustrait le produit de son poids avec le sommet reliÃ© au coeff k
+                    elt.second.m_value-=0.000015*(elm.m_weight)*(m_vertices[elm.m_to].m_value);
+                }
+            }
+            ///Pas de proies et pas de prédateurs = population diminue car ne peut pas se reproduire, s'éteint progressivement
+            else if((elt.second.m_value>1)&&(elt.second.m_value<100)&&(nombre_arrivantes=0)&&(nombre_partantes=0))
+            {
+                std::cout<<"AUCUNE"<<std::endl;
+                elt.second.k_capacite=0.001;
+                elt.second.coeff_croissance/=10;
+                elt.second.m_value+=(elt.second.coeff_croissance)*(elt.second.m_value)*(1-((elt.second.m_value)/(elt.second.k_capacite)));
+            }
+            std::cout<<"Valeur : "<<elt.second.m_value<<std::endl;
+            **/
+            std::cout<<"k vaut "<<elt.second.k_capacite<<std::endl;
+            ///Equation de dynamique de population si on a assez de population et qu'on a des proies et des prédateurs
+            if((elt.second.m_value>1)&&(elt.second.m_value<100)&&(nombre_arrivantes!=0)&&(nombre_partantes!=0))
             {
                 std::cout<<"Valeur pop AVANT : "<<elt.second.m_value<<std::endl;
+                if (elt.second.k_capacite==0)
+                {
+                    elt.second.k_capacite=elt.second.m_value/3;
+                }
                 elt.second.m_value+=(elt.second.coeff_croissance)*(elt.second.m_value)*(1-((elt.second.m_value)/(elt.second.k_capacite)));
                 std::cout<<"Valeur pop APRES1 : "<<elt.second.m_value<<std::endl;
                 for (auto &elm : arretes_partantes)
                 {
-                    std::cout<<"OK3"<<std::endl;
                     ///On soustrait le produit de son poids avec le sommet reliÃ© au coeff k
-                    elt.second.m_value-=0.00015*(elm.m_weight)*(m_vertices[elm.m_to].m_value);
+                    elt.second.m_value-=0.000015*(elm.m_weight)*(m_vertices[elm.m_to].m_value);
                 }
                 std::cout<<"Valeur pop APRES2: "<<elt.second.m_value<<std::endl;
             }
-            ///Si il n'y a pas de proies
-            if(elt.second.k_capacite==0)
+            ///Pas de proies et pas de prédateurs : pop diminue
+            else if((elt.second.m_value>1)&&(elt.second.m_value<100)&&(nombre_arrivantes==0)&&(nombre_partantes==0))
             {
-            ///Augmente car se reproduit légèrement
-            elt.second.m_value+=(elt.second.coeff_croissance)*(elt.second.m_value)*(1-((elt.second.m_value)/150));
-                ///Pop diminue à cause des prédateurs
-            for (auto &elm : arretes_partantes)
-                {
-                    std::cout<<"OK3"<<std::endl;
-                    ///On soustrait le produit de son poids avec le sommet reliÃ© au coeff k
-                    elt.second.m_value-=0.00015*(elm.m_weight)*(m_vertices[elm.m_to].m_value);
-                }
+                ///k petit pour que diminue
+                elt.second.k_capacite=0.01;
+                ///diminue légèrement
+                elt.second.coeff_croissance/=100;
+                std::cout<<"Valeur pop AVANT: "<<elt.second.m_value<<std::endl;
+                elt.second.m_value+=(elt.second.coeff_croissance)*(elt.second.m_value)*(1-((elt.second.m_value)/(elt.second.k_capacite)));
+                std::cout<<"Valeur pop APRES1: "<<elt.second.m_value<<std::endl;
             }
-            ///Si valeur supÃ©rieur Ã  100
+            ///Proie et pas de prédateur : augmente beaucoup
+            else if((elt.second.m_value>1)&&(elt.second.m_value<100)&&(nombre_arrivantes!=0)&&(nombre_partantes==0))
+            {
+                if(elt.second.k_capacite==0)
+                {
+                    elt.second.k_capacite=elt.second.m_value/1000;
+                }
+                elt.second.coeff_croissance*=100;
+                std::cout<<"Valeur pop AVANT: "<<elt.second.m_value<<std::endl;
+                elt.second.m_value+=(elt.second.coeff_croissance)*(elt.second.m_value)*(1-((elt.second.m_value)/(elt.second.k_capacite)));
+                std::cout<<"Valeur pop APRES1: "<<elt.second.m_value<<std::endl;
+            }
+            ///Pas de proie et prédateur
+            else if((elt.second.m_value>1)&&(elt.second.m_value<100)&&(nombre_arrivantes==0)&&(nombre_partantes!=0))
+            {
+                std::cout<<"Valeur pop AVANT: "<<elt.second.m_value<<std::endl;
+                for (auto &elm : arretes_partantes)
+                {
+                    ///On soustrait le produit de son poids avec le sommet reliÃ© au coeff k
+                    elt.second.m_value-=0.000015*(elm.m_weight)*(m_vertices[elm.m_to].m_value);
+                }
+                std::cout<<"Valeur pop APRES1: "<<elt.second.m_value<<std::endl;
+            }
+            ///Si valeur superieure a 100
             if (elt.second.m_value>100)
             {
-                ///On ramÃ¨ne Ã  100
+                ///On ramene a 100
                 elt.second.m_value=100;
             }
             ///Si ça vaut 100
-
             if((elt.second.m_value==100)&&(elt.second.k_capacite!=0))
             {
                 elt.second.coeff_croissance=-0.0003;
@@ -1083,10 +1192,12 @@ void Graph::croissance_sommets(clock_t temps)
                     elt.second.m_value-=(coeff_out)*(elm.m_weight/100)*(m_vertices[elm.m_to].m_value);
                 }
             }
+            ///Si l'espèce ne peut plus se reproduire
             if(elt.second.m_value<=1)
             {
                 elt.second.m_value=0;
             }
+            ///Pas de pop négative
             if(elt.second.m_value<0)
             {
                 elt.second.m_value=0;
