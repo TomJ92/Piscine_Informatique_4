@@ -388,7 +388,6 @@ public:
     void random_num();
     ///Calcul le coefficient k d'un sommet donné
     double calculK(std::vector<Edge> ar_arriv);
-    double calcul_coeff_out(std::vector<Edge> arr_part, double k_coeff);
     ///ss prog qui remplit un graphe en fonction d'un fichier
     void ReadFile(std::string fileName, int num);
     ///ss prog qui sauve un graphe en remplissant un fichier

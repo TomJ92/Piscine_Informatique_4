@@ -26,7 +26,6 @@ void afficher()
     menu_graphe3=load_bitmap("menu/MENU-Graphe3.bmp",0);
     menu_explications=load_bitmap("menu/MENU-Explications.bmp",0);
     menu_quitter=load_bitmap("menu/MENU-Quitter.bmp",0);
-    int i=0;
     ///Déclaration des variables
     bool quitter=false;
     unsigned int choix=0;

@@ -2,14 +2,9 @@
 <CodeBlocks_layout_file>
 	<FileVersion major="1" minor="0" />
 	<ActiveTarget name="Debug" />
-	<File name="main.cpp" open="0" top="0" tabpos="0" split="0" active="1" splitpos="0" zoom_1="0" zoom_2="0">
+	<File name="grman\widget.cpp" open="0" top="0" tabpos="0" split="0" active="1" splitpos="0" zoom_1="0" zoom_2="0">
 		<Cursor>
-			<Cursor1 position="188" topLine="0" />
-		</Cursor>
-	</File>
-	<File name="graph.h" open="1" top="0" tabpos="1" split="0" active="1" splitpos="0" zoom_1="0" zoom_2="0">
-		<Cursor>
-			<Cursor1 position="16015" topLine="296" />
+			<Cursor1 position="1741" topLine="21" />
 		</Cursor>
 	</File>
 	<File name="grman\widget.h" open="0" top="0" tabpos="0" split="0" active="1" splitpos="0" zoom_1="0" zoom_2="0">
@@ -17,27 +12,24 @@
 			<Cursor1 position="15465" topLine="413" />
 		</Cursor>
 	</File>
-	<File name="graph.cpp" open="1" top="1" tabpos="2" split="0" active="1" splitpos="0" zoom_1="0" zoom_2="0">
+	<File name="main.cpp" open="0" top="0" tabpos="0" split="0" active="1" splitpos="0" zoom_1="0" zoom_2="0">
 		<Cursor>
-			<Cursor1 position="35343" topLine="1023" />
+			<Cursor1 position="188" topLine="0" />
 		</Cursor>
-		<Folding>
-			<Collapse line="855" />
-			<Collapse line="871" />
-			<Collapse line="880" />
-			<Collapse line="1087" />
-			<Collapse line="1098" />
-			<Collapse line="1118" />
-		</Folding>
 	</File>
 	<File name="menu_fonctions.cpp" open="0" top="0" tabpos="0" split="0" active="1" splitpos="0" zoom_1="0" zoom_2="0">
 		<Cursor>
 			<Cursor1 position="3955" topLine="122" />
 		</Cursor>
 	</File>
-	<File name="grman\widget.cpp" open="0" top="0" tabpos="0" split="0" active="1" splitpos="0" zoom_1="0" zoom_2="0">
+	<File name="graph.h" open="1" top="0" tabpos="1" split="0" active="1" splitpos="0" zoom_1="0" zoom_2="0">
 		<Cursor>
-			<Cursor1 position="1741" topLine="21" />
+			<Cursor1 position="14932" topLine="355" />
+		</Cursor>
+	</File>
+	<File name="graph.cpp" open="1" top="1" tabpos="2" split="0" active="1" splitpos="0" zoom_1="0" zoom_2="0">
+		<Cursor>
+			<Cursor1 position="35473" topLine="964" />
 		</Cursor>
 	</File>
 </CodeBlocks_layout_file>
