@@ -902,7 +902,7 @@ void Graph::add_interfaced_edge(int idx, int id_vert1, int id_vert2, double weig
 void Graph::croissance_sommets(clock_t temps)
 {
     ///Toutes les 5 secondes
-    if (((temps/CLOCKS_PER_SEC)%2==0)&&(temps/CLOCKS_PER_SEC!=0))
+    if (((temps/CLOCKS_PER_SEC)%1==0)&&(temps/CLOCKS_PER_SEC!=0))
     ///if (key[KEY_7])
     {
         ///Pour chaque sommet
@@ -1224,7 +1224,7 @@ double Graph::calculK(std::vector<Edge> ar_arriv)
     *k=0;
     for(auto &elm : ar_arriv)
     {
-        *k+=(elm.m_weight/100)*(m_vertices[elm.m_from].m_value);
+        *k+=(elm.m_weight)*(m_vertices[elm.m_from].m_value);
     }
     return *k;
     delete k;
