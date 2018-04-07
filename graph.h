@@ -108,7 +108,7 @@ private :
 
     // Une image de "remplissage"
     grman::WidgetImage m_img;
-
+    grman::WidgetImage m_img2;
     // Un label indiquant l'index du sommet
     grman::WidgetText m_label_idx;
 
@@ -140,7 +140,6 @@ class Vertex
 private :
     /// liste des indices des arcs arrivant au sommet : accÃ¨s aux prÃ©dÃ©cesseurs
     std::vector<int> m_in;
-
     /// liste des indices des arcs partant du sommet : accÃ¨s aux successeurs
     std::vector<int> m_out;
         /// un exemple de donnée associée à l'arc, on peut en ajouter d'autres...
@@ -420,6 +419,8 @@ public:
     ///ajouter une combinaison
     void addCombi(int i);
     void initia();
+    void croix_rouge();
+
 };
 
 

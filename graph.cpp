@@ -51,6 +51,10 @@ VertexInterface::VertexInterface(int idx, int x, int y, std::string pic_name, in
     m_button_addEdge.set_bg_color(BLEU);
     m_button_addEdge.set_dim(10,10);
     m_button_addEdge.set_pos(95,0);
+    m_top_box.add_child(m_img2);
+    m_img2.set_dim(100,100);
+    m_img2.set_gravity_x(grman::GravityX::Right);
+    m_img2.set_pic_name("");
 }
 
 
@@ -702,6 +706,7 @@ void Graph::update(clock_t ini, bool animation)
             elm.second.m_weight=0;
         }
     }
+    croix_rouge();
 }
 
 ///la mÃ©thode qui ajoute une arete
@@ -764,16 +769,164 @@ void Graph::addVertex()
     //int number1;
     std::string name;
     std::string number;
-    std::string picName="clown1.jpg";
+    std::string picName;
     switch(m_numGraphe)
     {
     case 1:
-        break;
-    case 2:
-        break;
-    case 3:
+    {
+        for(auto &elm : m_vertices)
+        {
+            if (elm.second.m_interface->m_img.getName()!="Mer1.bmp")
+            {
+        picName="Mer1.bmp";
+            }
+            else if (elm.second.m_interface->m_img.getName()!="Mer2.bmp")
+            {
+        picName="Mer2.bmp";
+            }
+            else if (elm.second.m_interface->m_img.getName()!="Mer3.bmp")
+            {
+        picName="Mer3.bmp";
+            }
+            else if (elm.second.m_interface->m_img.getName()!="Mer4.bmp")
+            {
+        picName="Mer4.bmp";
+            }
+            else if (elm.second.m_interface->m_img.getName()!="Mer5.bmp")
+            {
+        picName="Mer5.bmp";
+            }
+            else if (elm.second.m_interface->m_img.getName()!="Mer6.bmp")
+            {
+        picName="Mer6.bmp";
+            }
+            else if (elm.second.m_interface->m_img.getName()!="Mer7.bmp")
+            {
+       picName="Mer7.bmp";
+            }
+            else if (elm.second.m_interface->m_img.getName()!="Mer8.bmp")
+            {
+        picName="Mer8.bmp";
+            }
+            else if (elm.second.m_interface->m_img.getName()!="Mer9.bmp")
+            {
+        picName="Mer9.bmp";
+            }
+            else if (elm.second.m_interface->m_img.getName()!="Mer10.bmp")
+            {
+        picName="Mer10.bmp";
+            }
+            else if (elm.second.m_interface->m_img.getName()!="Mer11.bmp")
+            {
+        picName="Mer11.bmp";
+            }
+        }
         break;
     }
+    case 2:
+    {
+        for(auto &elm : m_vertices)
+        {
+            if (elm.second.m_interface->m_img.getName()!="Dragon1.bmp")
+            {
+        picName="Dragon1.bmp";
+            }
+            else if (elm.second.m_interface->m_img.getName()!="Dragon2.bmp")
+            {
+        picName="Dragon2.bmp";
+            }
+            else if (elm.second.m_interface->m_img.getName()!="Dragon3.bmp")
+            {
+        picName="Dragon3.bmp";
+            }
+            else if (elm.second.m_interface->m_img.getName()!="Dragon4.bmp")
+            {
+        picName="Dragon4.bmp";
+            }
+            else if (elm.second.m_interface->m_img.getName()!="Dragon5.bmp")
+            {
+        picName="Dragon5.bmp";
+            }
+            else if (elm.second.m_interface->m_img.getName()!="Dragon6.bmp")
+            {
+        picName="Dragon6.bmp";
+            }
+            else if (elm.second.m_interface->m_img.getName()!="Dragon7.bmp")
+            {
+        picName="Dragon7.bmp";
+            }
+            else if (elm.second.m_interface->m_img.getName()!="Dragon8.bmp")
+            {
+        picName="Dragon8.bmp";
+            }
+            else if (elm.second.m_interface->m_img.getName()!="Dragon9.bmp")
+            {
+        picName="Dragon9.bmp";
+            }
+            else if (elm.second.m_interface->m_img.getName()!="Dragon10.bmp")
+            {
+        picName="Dragon10.bmp";
+            }
+            else if (elm.second.m_interface->m_img.getName()!="Dragon11.bmp")
+            {
+        picName="Dragon11.bmp";
+            }
+        }
+        break;
+    }
+    case 3:
+    {
+        for(auto &elm : m_vertices)
+        {
+            if (elm.second.m_interface->m_img.getName()!="Poke1.bmp")
+            {
+        picName="Poke1.bmp";
+            }
+            else if (elm.second.m_interface->m_img.getName()!="Poke2.bmp")
+            {
+        picName="Poke2.bmp";
+            }
+            else if (elm.second.m_interface->m_img.getName()!="Poke3.bmp")
+            {
+        picName="Poke3.bmp";
+            }
+            else if (elm.second.m_interface->m_img.getName()!="Poke4.bmp")
+            {
+        picName="Poke4.bmp";
+            }
+            else if (elm.second.m_interface->m_img.getName()!="Poke5.bmp")
+            {
+        picName="Poke5.bmp";
+            }
+            else if (elm.second.m_interface->m_img.getName()!="Poke6.bmp")
+            {
+        picName="Poke6.bmp";
+            }
+            else if (elm.second.m_interface->m_img.getName()!="Poke7.bmp")
+            {
+        picName="Poke7.bmp";
+            }
+            else if (elm.second.m_interface->m_img.getName()!="Poke8.bmp")
+            {
+        picName="Poke8.bmp";
+            }
+            else if (elm.second.m_interface->m_img.getName()!="Poke9.bmp")
+            {
+        picName="Poke9.bmp";
+            }
+            else if (elm.second.m_interface->m_img.getName()!="Poke10.bmp")
+            {
+        picName="Poke10.bmp";
+            }
+            else if (elm.second.m_interface->m_img.getName()!="Poke11.bmp")
+            {
+        picName="Poke11.bmp";
+            }
+        }
+        break;
+    }
+    }
+
     for(auto it=m_vertices.begin(); it!=m_vertices.end(); it++)
     {
         indice= it->first;
@@ -850,7 +1003,6 @@ void Graph::initialisation()
     }
     m_numGraphe=0;
 }
-
 /// Aide Ã  l'ajout de sommets interfacÃ©s
 void Graph::add_interfaced_vertex(int idx, double value, int x, int y, std::string pic_name, int pic_idx )
 {
@@ -903,7 +1055,7 @@ void Graph::croissance_sommets(clock_t temps)
 {
     ///Toutes les 5 secondes
     if (((temps/CLOCKS_PER_SEC)%1==0)&&(temps/CLOCKS_PER_SEC!=0))
-    ///if (key[KEY_7])
+        ///if (key[KEY_7])
     {
         ///Pour chaque sommet
         for (auto &elt : m_vertices)
@@ -1051,8 +1203,8 @@ void Graph::croissance_sommets(clock_t temps)
                 }
                 coeff_out+=(m_vertices[elm.m_to].m_value)*(m_vertices[elm.m_to].k_capacite);
             }
-           /// bool arrivOK = false;
-           /// bool partOK=false;
+            /// bool arrivOK = false;
+            /// bool partOK=false;
             /**
             if(nombre_arrivantes!=0)
             {
@@ -1147,7 +1299,7 @@ void Graph::croissance_sommets(clock_t temps)
                 ///k petit pour que diminue
                 elt.second.k_capacite=0.01;
                 ///diminue légèrement
-                elt.second.coeff_croissance/=100;
+                elt.second.coeff_croissance/=150;
                 std::cout<<"Valeur pop AVANT: "<<elt.second.m_value<<std::endl;
                 elt.second.m_value+=(elt.second.coeff_croissance)*(elt.second.m_value)*(1-((elt.second.m_value)/(elt.second.k_capacite)));
                 std::cout<<"Valeur pop APRES1: "<<elt.second.m_value<<std::endl;
@@ -1234,5 +1386,19 @@ void Graph::initia()
     for(auto &elm : m_vertices)
     {
         elm.second.coeff_croissance=0;
+    }
+}
+void Graph::croix_rouge()
+{
+    for(auto &elm:m_vertices)
+    {
+        if(elm.second.m_value==0)
+        {
+            elm.second.m_interface->m_img2.set_pic_name("croix_rouge.bmp");
+        }
+        else if(elm.second.m_value!=0)
+        {
+            elm.second.m_interface->m_img2.set_pic_name("");
+        }
     }
 }
