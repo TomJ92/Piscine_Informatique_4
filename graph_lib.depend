@@ -99,13 +99,13 @@
 	<algorithm>
 	<allegro.h>
 
-1522920991 source:c:\users\ben\documents\github\piscine_informatique_4\main.cpp
+1522935010 source:c:\users\ben\documents\github\piscine_informatique_4\main.cpp
 	"grman/grman.h"
 	<iostream>
 	"menu_fonctions.cpp"
 	"graph.h"
 
-1522871750 c:\users\ben\documents\github\piscine_informatique_4\menu_fonctions.cpp
+1523024457 c:\users\ben\documents\github\piscine_informatique_4\menu_fonctions.cpp
 	"grman/grman.h"
 	<iostream>
 	"graph.h"
@@ -113,7 +113,7 @@
 
 1522795529 c:\users\ben\documents\github\piscine_informatique_4\menu_fonctions.h
 
-1522923025 c:\users\ben\documents\github\piscine_informatique_4\graph.h
+1523024423 c:\users\ben\documents\github\piscine_informatique_4\graph.h
 	<fstream>
 	<iostream>
 	<vector>
@@ -125,14 +125,15 @@
 1522868439 source:c:\users\ben\documents\github\piscine_informatique_4\grman\widget.cpp
 	"widget.h"
 
-1522926770 source:c:\users\ben\documents\github\piscine_informatique_4\graph.cpp
+1523025235 source:c:\users\ben\documents\github\piscine_informatique_4\graph.cpp
 	"graph.h"
 
-1523027988 source:c:\users\tom jouvet\documents\github\piscine_informatique_4\graph.cpp
+1523111384 source:c:\users\ben\desktop\piscine_informatique_4\graph.cpp
 	"graph.h"
 
-1523027929 c:\users\tom jouvet\documents\github\piscine_informatique_4\graph.h
+1523129512 c:\users\ben\desktop\piscine_informatique_4\graph.h
 	<fstream>
+	<queue>
 	<iostream>
 	<vector>
 	<map>
@@ -140,19 +141,19 @@
 	<memory>
 	"grman/grman.h"
 
-1522783196 c:\users\tom jouvet\documents\github\piscine_informatique_4\grman\grman.h
+1522795529 c:\users\ben\desktop\piscine_informatique_4\grman\grman.h
 	<allegro.h>
 	<string>
 	"grman_couleurs.h"
 	"coords.h"
 	"widget.h"
 
-1522783196 c:\users\tom jouvet\documents\github\piscine_informatique_4\grman\grman_couleurs.h
+1522795529 c:\users\ben\desktop\piscine_informatique_4\grman\grman_couleurs.h
 
-1522783196 c:\users\tom jouvet\documents\github\piscine_informatique_4\grman\coords.h
+1522795529 c:\users\ben\desktop\piscine_informatique_4\grman\coords.h
 	<cmath>
 
-1523027016 c:\users\tom jouvet\documents\github\piscine_informatique_4\grman\widget.h
+1522880195 c:\users\ben\desktop\piscine_informatique_4\grman\widget.h
 	"grman.h"
 	<iostream>
 	<string>
@@ -160,10 +161,10 @@
 	<algorithm>
 	<allegro.h>
 
-1522783196 source:c:\users\tom jouvet\documents\github\piscine_informatique_4\grman\coords.cpp
+1522795529 source:c:\users\ben\desktop\piscine_informatique_4\grman\coords.cpp
 	"coords.h"
 
-1522783196 source:c:\users\tom jouvet\documents\github\piscine_informatique_4\grman\grman.cpp
+1522867118 source:c:\users\ben\desktop\piscine_informatique_4\grman\grman.cpp
 	<cmath>
 	<unordered_map>
 	<unordered_set>
@@ -177,20 +178,20 @@
 	<loadpng.h>
 	<jpgalleg.h>
 
-1523027016 source:c:\users\tom jouvet\documents\github\piscine_informatique_4\grman\widget.cpp
+1522868439 source:c:\users\ben\desktop\piscine_informatique_4\grman\widget.cpp
 	"widget.h"
 
-1523027016 source:c:\users\tom jouvet\documents\github\piscine_informatique_4\main.cpp
+1522935010 source:c:\users\ben\desktop\piscine_informatique_4\main.cpp
 	"grman/grman.h"
 	<iostream>
 	"menu_fonctions.cpp"
 	"graph.h"
 
-1523027913 c:\users\tom jouvet\documents\github\piscine_informatique_4\menu_fonctions.cpp
+1523114295 c:\users\ben\desktop\piscine_informatique_4\menu_fonctions.cpp
 	"grman/grman.h"
 	<iostream>
 	"graph.h"
 	"MENU_FONCTIONS.h"
 
-1523026885 c:\users\tom jouvet\documents\github\piscine_informatique_4\menu_fonctions.h
+1522795529 c:\users\ben\desktop\piscine_informatique_4\menu_fonctions.h
 
