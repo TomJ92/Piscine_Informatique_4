@@ -3,6 +3,7 @@
 #include <fstream>
 #include <queue>
 #include <iostream>
+#include <ctime>
 /**************************************************************
     Ici sont proposées 3 classes fondamentales
             Vertex (=Sommet)
@@ -121,6 +122,7 @@ class VertexInterface
         grman::WidgetButton m_button_addEdge;
         grman::WidgetText m_textNum;
 
+        grman::WidgetImage m_img2;
 
 
     public :
@@ -161,6 +163,10 @@ class Vertex
         bool m_marqueur;
         bool m_marque;
         int m_numero_compo_connexe;
+        /// Cacapité de portage de l'environnement
+        double k_capacite;
+        /// Rythme de croissance
+        double coeff_croissance;
         ///composante fortemenet connexe
 
         // Docu shared_ptr : https://msdn.microsoft.com/fr-fr/library/hh279669.aspx
@@ -331,13 +337,9 @@ class GraphInterface
         ///bouton pour mettre tout aléatoire
         grman::WidgetButton m_button_random;
         grman::WidgetText m_text_random;
-        ///bouton pour afficher graphe réduit
-
         ///petit bouton pour plus afficher les composante connexe
         grman::WidgetButton m_button_restartConnex;
-        ///si appuie sur add ou supprimer
-        ///mettre num à 0 et ne plus afficher les composantes
-
+        ///bouton pour afficher graphe réduit
 
     public :
 
@@ -404,7 +406,7 @@ class Graph
 
 
         /// La méthode update à appeler dans la boucle de jeu pour les graphes avec interface
-        void update();
+        void update(clock_t ini, bool animation);
         ///ss prog qui remplit un graphe en fonction d'un fichier
         void ReadFile(std::string fileName, int num);
         ///ss prog qui sauve un graphe en remplissant un fichier
@@ -445,7 +447,11 @@ class Graph
         bool* recherche_cmp(int i);
         void rendreConti(int num);
         void rendreConti2(std::string fileName);
-
+        void croissance_sommets(clock_t temps);
+        double calculK(std::vector<Edge> ar_arriv);
+        void initia();
+        void croix_rouge();
+        void random();
 };
 
 

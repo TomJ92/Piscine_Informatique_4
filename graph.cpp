@@ -56,6 +56,12 @@ VertexInterface::VertexInterface(int idx, int x, int y, std::string pic_name, in
     m_top_box.add_child(m_textNum);
     m_textNum.set_pos(37,88);
     m_textNum.set_message("");
+
+    m_top_box.add_child(m_img2);
+    m_img2.set_dim(100,100);
+    m_img2.set_gravity_x(grman::GravityX::Right);
+    m_img2.set_pic_name("");
+
 }
 
 
@@ -275,7 +281,7 @@ GraphInterface::GraphInterface(int x, int y, int w, int h)
     m_tool_box.add_child(m_button_restartConnex);
     m_button_restartConnex.set_dim(7,7);
     m_button_restartConnex.set_pos(68,276);
-    m_button_restartConnex.set_bg_color(CYAN);
+    m_button_restartConnex.set_bg_color(BLEU);
 
     ///bouton pour lancer la simulation
     m_top_box.add_child(m_button_start);
@@ -296,6 +302,17 @@ GraphInterface::GraphInterface(int x, int y, int w, int h)
     m_button_stop.add_child(m_text_stop);
     m_text_stop.set_pos(9,13);
     m_text_stop.set_message("Stop");
+
+    ///bouton pour mettre les nombre aléatoire
+    m_top_box.add_child(m_button_random);
+    m_button_random.set_dim(50,35);
+    m_button_random.set_pos(15,415);
+    m_button_random.set_bg_color(ROSE);
+
+    ///TEXTE RANDOM
+    m_button_random.add_child(m_text_random);
+    m_text_random.set_pos(2,13);
+    m_text_random.set_message("Random");
 
     ///bouton  pour quitter le programme
     m_top_box.add_child(m_button_quit);
@@ -401,9 +418,9 @@ void Graph::reinit(std::string fileName)
             fichier>>numS;
             getline(fichier,nom);
             ///sa position
-            fichier>>xdep;
-            getline(fichier,nom);
             fichier>>ydep;
+            getline(fichier,nom);
+            fichier>>xdep;
             getline(fichier,nom);
             ///sa valeur
             fichier>>valeur;
@@ -475,9 +492,9 @@ void Graph::ReadFile(std::string fileName, int num)
             fichier>>numS;
             getline(fichier,nom);
             ///sa position
-            fichier>>x;
-            getline(fichier,nom);
             fichier>>y;
+            getline(fichier,nom);
+            fichier>>x;
             getline(fichier,nom);
             ///sa valeur
             fichier>>valeur;
@@ -558,8 +575,9 @@ void Graph::saveFile(std::string fileName)
 }
 
 /// La méthode update à appeler dans la boucle de jeu pour les graphes avec interface
-void Graph::update()
+void Graph::update(clock_t ini, bool animation)
 {
+    bool good;
     int num=m_numGraphe;
     if (!m_interface)
         return;
@@ -591,16 +609,28 @@ void Graph::update()
                 /// si on a selectionné un autre sommet
                 else if(m_addTo==false&&m_addFrom==true&&m_vertexAlreadyUse!=elt.first)
                 {
+                    good=true;
                     ///on ajoute une arrête et reset tout les paramétre
                     m_vertexForNewEdge[1]=elt.first;
                     m_addFrom=false;
                     m_addTo=false;
-                    addEdge(m_vertexForNewEdge);
+                    for(auto &elm:m_edges)
+                    {
+                        if(m_vertexForNewEdge[0]==elm.second.m_from&&m_vertexForNewEdge[1]==elm.second.m_to)
+                        {
+                            good=false;
+                        }
+                    }
+                    if(good)
+                    {
+                        addEdge(m_vertexForNewEdge);
+                    }
+                    else if(!good)
+                    {
+                        std::cout<<"cet arete existe déjà"<<std::endl;
+                    }
                     m_ajouterNewEdge=false;
                     m_interface->m_button_connex.set_value(false);
-                    saveFile("Graphe1Inter");
-                    initialisation();
-                    ReadFile("Graphe1Inter",num);
                 }
             }
         }
@@ -753,6 +783,7 @@ void Graph::update()
         m_ajouterNewEdge=true;
         initButton();
         std::cout<<"Selectionner 2 sommet"<<std::endl;
+
     }
     if(m_interface->m_button_noAddEdge.get_value())
     {
@@ -781,6 +812,33 @@ void Graph::update()
         saveFile("Graphe1Inter");
         initialisation();
         ReadFile("Graphe1Inter",num);
+    }
+    if(m_interface->m_button_start.get_value())
+    {
+        animation=true;
+    }
+    if(m_interface->m_button_stop.get_value())
+    {
+        animation=false;
+        m_interface->m_button_start.set_value(false);
+        m_interface->m_button_stop.set_value(false);
+    }
+    if(animation)
+    {
+        croissance_sommets(ini);
+        croix_rouge();
+    }
+    else if (!animation)
+    {
+        for(auto & el:m_vertices)
+        {
+            el.second.m_interface->m_img2.set_pic_name("");
+        }
+    }
+    if(m_interface->m_button_random.get_value())
+    {
+        m_interface->m_button_random.set_value(false);
+        random();
     }
 }
 
@@ -881,11 +939,12 @@ void Graph::rendreConti(int num)
     {
         std::cout<<el.second.m_from<<"  "<<el.second.m_to<<std::endl;
     }
-   rendreConti2("Graphe1Inter");
-   initialisation();
-   ReadFile("Graphe1Inter",inter);
-   std::cout<<std::endl<<m_numGraphe;
+    rendreConti2("Graphe1Inter");
+    initialisation();
+    ReadFile("Graphe1Inter",inter);
+    std::cout<<std::endl<<m_numGraphe;
 }
+
 void Graph::rendreConti2(std::string fileName)
 {
     ///variable pour la valeur de l'image
@@ -937,34 +996,122 @@ void Graph::rendreConti2(std::string fileName)
     }
 }
 
-///la méthode qui ajoute un sommet
 void Graph::addVertex()
 {
     ///on regarde l'indice le plus grand de la map d'arete
     int indice;
-    int number1;
+    //int number1;
     std::string name;
     std::string number;
-    std::string picName="clown1.jpg";
+    std::string picName;
+    std::vector<std::string> allName;
+    bool good=false;
+    int idx=1;
+    for(auto & el:m_vertices)
+    {
+        allName.push_back(el.second.m_interface->m_img.getName());
+    }
     switch(m_numGraphe)
     {
     case 1:
-        break;
-    case 2:
-        break;
-    case 3:
-        break;
-    }
-    for(auto it=m_vertices.begin(); it!=m_vertices.end(); it++)
     {
-        indice= it->first;
+
+        while(!good)
+        {
+            good=true;
+            if(idx>12)
+            {
+                number=std::to_string(idx-12);
+                picName="Poke"+number+".bmp";
+            }
+            else if(idx<=12)
+            {
+                number=std::to_string(idx);
+                picName="Dragon"+number+".bmp";
+            }
+            for(int i=0;i<allName.size();i++)
+            {
+                if(picName==allName[i])
+                {
+                    good=false;
+                }
+            }
+            if(!good)
+            {
+                idx++;
+            }
+        }
+    break;
     }
-    ///on ajoute +1 sur l'indice
-    indice++;
-    ///on ajoute un sommet
-    add_interfaced_vertex(indice,50,300,300,picName);
+case 2:
+    {
+       while(!good)
+        {
+            good=true;
+            if(idx>11)
+            {
+                number=std::to_string(idx-11);
+                picName="Poke"+number+".bmp";
+            }
+            else if(idx<=11)
+            {
+                number=std::to_string(idx);
+                picName="Mer"+number+".bmp";
+            }
+            for(int i=0;i<allName.size();i++)
+            {
+                if(picName==allName[i])
+                {
+                    good=false;
+                }
+            }
+            if(!good)
+            {
+                idx++;
+            }
+        }
+        break;
+    }
+case 3:
+    {
+        while(!good)
+        {
+            good=true;
+            if(idx>12)
+            {
+                number=std::to_string(idx-11);
+                picName="Mer"+number+".bmp";
+            }
+            else if(idx<=12)
+            {
+                number=std::to_string(idx);
+                picName="Dragon"+number+".bmp";
+            }
+            for(int i=0;i<allName.size();i++)
+            {
+                if(picName==allName[i])
+                {
+                    good=false;
+                }
+            }
+            if(!good)
+            {
+                idx++;
+            }
+        }
+        break;
+    }
 }
 
+for(auto it=m_vertices.begin(); it!=m_vertices.end(); it++)
+{
+    indice= it->first;
+}
+///on ajoute +1 sur l'indice
+indice++;
+///on ajoute un sommet
+add_interfaced_vertex(indice,50,300,300,picName);
+}
 ///la méthode qui enleve une arete
 void Graph::removeEdge(int num)
 {
@@ -1260,7 +1407,7 @@ void Graph::afficher_k_connex(std::vector<int>& inter,std::vector<std::vector <i
 
 std::map<int,std::vector<int>>  Graph::algo_forte_connexite()
 {
-    int couleurs[20]={ROUGE, ROUGECLAIR, BLEU, VERT, JAUNE, ORANGE, SABLE, GRIS, BLANC, VIOLETCLAIR, MARRONCLAIR, BLEUCLAIR, VERTCLAIR, BLANCBLEU, JAUNECLAIR,FUCHSIASOMBRE,FUCHSIA,CYAN,KAKI,CYANSOMBRE};
+    int couleurs[20]= {ROUGE, ROUGECLAIR, BLEU, VERT, JAUNE, ORANGE, SABLE, GRIS, BLANC, VIOLETCLAIR, MARRONCLAIR, BLEUCLAIR, VERTCLAIR, BLANCBLEU, JAUNECLAIR,FUCHSIASOMBRE,FUCHSIA,CYAN,KAKI,CYANSOMBRE};
     int nb_compos=1; ///Nombre de composantes fortement connexes
     int nb_arete(0);
     bool presence_cfc;
@@ -1341,10 +1488,11 @@ std::map<int,std::vector<int>>  Graph::algo_forte_connexite()
                 fichier << "sommet_general.jpg" << std::endl; ///Les sommets généraux auront une image neutre
             if(elem.second.size()==1)
                 fichier << m_vertices[elem.second.front()].m_interface->m_img.getName() << std::endl;
-                ///Les sommets étant d'eux-mêmes une composante fortement connexe gardent leur image
+            ///Les sommets étant d'eux-mêmes une composante fortement connexe gardent leur image
         }
         if(composantes_connexes.size()==m_vertices.size()) ///Si tous les sommets forment eux-memes des composantes
-        {                                                    ///fortement connexes, on reprend les arcs du graphe sans les modifier
+        {
+            ///fortement connexes, on reprend les arcs du graphe sans les modifier
             fichier << m_nbArete << std::endl;
             for(auto &elem :m_edges)
             {
@@ -1357,7 +1505,7 @@ std::map<int,std::vector<int>>  Graph::algo_forte_connexite()
         if(composantes_connexes.size()<m_vertices.size())///Si il y a des sommets généraux
         {
             for(auto &elem: m_edges) ///On calcule le nombre d'aretes en question
-            ///Les arêtes en pleine composante fortement connexe sont ignorées
+                ///Les arêtes en pleine composante fortement connexe sont ignorées
             {
                 if(m_vertices[elem.second.m_from].m_numero_compo_connexe!=m_vertices[elem.second.m_to].m_numero_compo_connexe)
                     nb_arete++;
@@ -1389,9 +1537,358 @@ std::map<int,std::vector<int>>  Graph::algo_forte_connexite()
     return composantes_connexes;
 }
 
+void Graph::croissance_sommets(clock_t temps)
+{
+    ///Toutes les 5 secondes
+    if (((temps/CLOCKS_PER_SEC)%1==0)&&(temps/CLOCKS_PER_SEC!=0))
+        ///if (key[KEY_7])
+    {
+        ///Pour chaque sommet
+        for (auto &elt : m_vertices)
+        {
+            ///On crée deux tableaux de vecteurs
+            std::vector<Edge> arretes_arrivantes;
+            std::vector<Edge> arretes_partantes;
+            elt.second.coeff_croissance=0.0001;
+            ///Pour chaque arrête
+            for(auto &elm : m_edges)
+            {
+
+                if(elt.first==elm.second.m_to)
+                {
+                    arretes_arrivantes.push_back(elm.second);
+                }
+                if(elt.first==elm.second.m_from)
+                {
+                    arretes_partantes.push_back(elm.second);
+                }
+                ///Si l'arrête va vers le sommet
+                elt.second.k_capacite=0;
+                /** if (elm.second.m_to==elt.first)
+                 {
+                     ///On l'ajoute au vecteur
+                     arretes_arrivantes.push_back(elm.second);
+                 }
+                 ///Si l'arrête part du sommet
+                 if (elm.second.m_from==elt.first)
+                 {
+                     ///On l'ajoute au sommet
+                     arretes_partantes.push_back(elm.second);
+                 }**/
+            }
+            ///On crée un entier qu'on initialise à 0
+            /**
+            for (auto &elm : bidon->m_in)
+            {
+                Vertex* new_sommet = new Vertex;
+                Edge* new_arrete = new Edge;
+                *new_arrete=m_edges[elm];
+                *new_sommet=new_arrete->m_from;
+                voisins[new_sommet]=*new_arrete;
+                delete new_arrete;
+                delete new_sommet;
+            =======
+            ///on donne les valeurs de m_from et m_to
+            m_edges[idx].setFrom(id_vert1);
+            m_edges[idx].setTo(id_vert2);
+            m_vertices[id_vert1].m_out.push_back(idx);
+            m_vertices[id_vert2].m_in.push_back(idx);
+            }
+            ///Dynamique de populations du graphe
+            void Graph::croissance_sommets(clock_t temps)
+            {
+            ///Toutes les 5 secondes
+            /// if (((temps/CLOCKS_PER_SEC)%1==0)&&(temps/CLOCKS_PER_SEC!=0))
+            if (key[KEY_7])
+            {
+            ///Pour chaque sommet
+            for (auto &elt : m_vertices)
+            {
+            ///On crÃ©e deux tableaux de vecteurs
+            std::vector<Edge> arretes_arrivantes;
+            std::vector<Edge> arretes_partantes;
+            ///Pour chaque arrÃªte
+            for(auto &elm : m_edges)
+            {
+                if(elt.first==elm.second.m_to)
+                {
+                    arretes_arrivantes.push_back(elm.second);
+                }
+                if(elt.first==elm.second.m_from)
+                {
+                    arretes_partantes.push_back(elm.second);
+                }
+                ///Si l'arrÃªte va vers le sommet
+                elt.second.k_capacite=0;
+                if (elm.second.m_to==elt.first)
+                 {
+                     ///On l'ajoute au vecteur
+                     arretes_arrivantes.push_back(elm.second);
+                 }
+                 ///Si l'arrÃªte part du sommet
+                 if (elm.second.m_from==elt.first)
+                 {
+                     ///On l'ajoute au sommet
+                     arretes_partantes.push_back(elm.second);
+                 }**/
+            ///On crÃ©e un entier qu'on initialise Ã  0
+            /**
+            for (auto &elm : bidon->m_in)
+            {
+                Vertex* new_sommet = new Vertex;
+                Edge* new_arrete = new Edge;
+                *new_arrete=m_edges[elm];
+                *new_sommet=new_arrete->m_from;
+                voisins[new_sommet]=*new_arrete;
+                delete new_arrete;
+                delete new_sommet;
+            >>>>>>> master
+            }
+            for (auto &elm : bidon->m_out)
+            {
+                Vertex* new_som0met = new Vertex;
+                Edge* new_arrete = new Edge;
+                *new_arrete=m_edges[elm];
+                *new_sommet=new_arrete->m_to;
+                voisins[*new_sommet]=*new_arrete;
+                delete new_arrete;
+                delete new_sommet;
+            }
+            delete bidon;
+            for (auto &elm : voisins)
+            {
+                *kkk+=(elm.first.m_value)*(elm.second.m_weight);
+            }
+            **/
+            ///Pour chaque arrête arrivantes
+            unsigned int nombre_arrivantes=0;
+            for(auto &lol : arretes_arrivantes)
+            {
+                ///Si la pop du sommet n'est pas égale à 0
+                if(m_vertices[lol.m_from].m_value!=0)
+                {
+                    nombre_arrivantes++; ///On a une population qui influe
+                }
+            }
+            std::cout<<"Sommet : "<<elt.first<<std::endl;
+            elt.second.k_capacite=calculK(arretes_arrivantes);
+            double coeff_out=0;
+            unsigned int nombre_partantes=0;
+            for(auto &elm : arretes_partantes)
+            {
+                ///Si la pop du sommet
+                if (m_vertices[elm.m_to].m_value!=0)
+                {
+                    nombre_partantes++;
+                }
+                coeff_out+=(m_vertices[elm.m_to].m_value)*(m_vertices[elm.m_to].k_capacite);
+            }
+            /// bool arrivOK = false;
+            /// bool partOK=false;
+            /**
+            if(nombre_arrivantes!=0)
+            {
+              arrivOK=true;
+                std::cout<<"A VRAI"<<std::endl;
+            }
+            else if(nombre_arrivantes==0)
+            {
+                arrivOK=false;
+                std::cout<<"A FAUX"<<std::endl;
+            }
+            if(nombre_partantes!=0)
+            {
+                partOK=false;
+                std::cout<<"P FAUX"<<std::endl;
+            }
+            else if(nombre_partantes==0)
+            {
+                partOK=true;
+                std::cout<<"P VRAI"<<std::endl;
+            }
+            ///Proies et prédateurs présents = population varie selon proies et prédateurs
+            if((elt.second.m_value>1)&&(elt.second.m_value<100)&&(!arrivOK)&&(nombre_partantes!=0))
+            {
+                std::cout<<"LES DEUX"<<std::endl;
+                if(elt.second.k_capacite!=0)
+                {
+                    elt.second.k_capacite=50;
+                }
+                elt.second.m_value+=(elt.second.coeff_croissance)*(elt.second.m_value)*(1-((elt.second.m_value)/(elt.second.k_capacite)));
+                for (auto &elm : arretes_partantes)
+                {
+                    ///On soustrait le produit de son poids avec le sommet reliÃ© au coeff k
+                    elt.second.m_value-=0.000015*(elm.m_weight)*(m_vertices[elm.m_to].m_value);
+                }
+            }
+            ///Proies et pas de prédateurs = population augmente beaucoup
+            else if((elt.second.m_value>1)&&(elt.second.m_value<100)&&(nombre_arrivantes=0)&&(nombre_partantes!=0))
+            {
+                std::cout<<"PROIES"<<std::endl;
+                if(elt.second.k_capacite==0)
+                {
+                    elt.second.k_capacite=100000000;
+                }
+                elt.second.coeff_croissance*=10;
+                elt.second.m_value+=(elt.second.coeff_croissance)*(elt.second.m_value)*(1-((elt.second.m_value)/(elt.second.k_capacite)));
+            }
+            ///Pas de proies et prédateurs = population diminue beaucoup
+            else if((elt.second.m_value>1)&&(elt.second.m_value<100)&&(nombre_arrivantes!=0)&&(nombre_partantes=0))
+            {
+                std::cout<<"PREDA"<<std::endl;
+                elt.second.k_capacite=0.00001;
+                elt.second.coeff_croissance*=10;
+                elt.second.m_value+=(elt.second.coeff_croissance)*(elt.second.m_value)*(1-((elt.second.m_value)/(elt.second.k_capacite)));
+                for (auto &elm : arretes_partantes)
+                {
+                    ///On soustrait le produit de son poids avec le sommet reliÃ© au coeff k
+                    elt.second.m_value-=0.000015*(elm.m_weight)*(m_vertices[elm.m_to].m_value);
+                }
+            }
+            ///Pas de proies et pas de prédateurs = population diminue car ne peut pas se reproduire, s'éteint progressivement
+            else if((elt.second.m_value>1)&&(elt.second.m_value<100)&&(nombre_arrivantes=0)&&(nombre_partantes=0))
+            {
+                std::cout<<"AUCUNE"<<std::endl;
+                elt.second.k_capacite=0.001;
+                elt.second.coeff_croissance/=10;
+                elt.second.m_value+=(elt.second.coeff_croissance)*(elt.second.m_value)*(1-((elt.second.m_value)/(elt.second.k_capacite)));
+            }
+            std::cout<<"Valeur : "<<elt.second.m_value<<std::endl;
+            **/
+            std::cout<<"k vaut "<<elt.second.k_capacite<<std::endl;
+            ///Equation de dynamique de population si on a assez de population et qu'on a des proies et des prédateurs
+            if((elt.second.m_value>1)&&(elt.second.m_value<=100)&&(nombre_arrivantes!=0)&&(nombre_partantes!=0))
+            {
+                std::cout<<"Valeur pop AVANT : "<<elt.second.m_value<<std::endl;
+                if (elt.second.k_capacite==0)
+                {
+                    elt.second.k_capacite=elt.second.m_value/3;
+                }
+                elt.second.m_value+=(elt.second.coeff_croissance)*(elt.second.m_value)*(1-((elt.second.m_value)/(elt.second.k_capacite)));
+                std::cout<<"Valeur pop APRES1 : "<<elt.second.m_value<<std::endl;
+                for (auto &elm : arretes_partantes)
+                {
+                    ///On soustrait le produit de son poids avec le sommet reliÃ© au coeff k
+                    elt.second.m_value-=0.000015*(elm.m_weight)*(m_vertices[elm.m_to].m_value);
+                }
+                std::cout<<"Valeur pop APRES2: "<<elt.second.m_value<<std::endl;
+            }
+            ///Pas de proies et pas de prédateurs : pop diminue
+            else if((elt.second.m_value>1)&&(elt.second.m_value<=100)&&(nombre_arrivantes==0)&&(nombre_partantes==0))
+            {
+                ///k petit pour que diminue
+                elt.second.k_capacite=0.01;
+                ///diminue légèrement
+                elt.second.coeff_croissance/=150;
+                std::cout<<"Valeur pop AVANT: "<<elt.second.m_value<<std::endl;
+                elt.second.m_value+=(elt.second.coeff_croissance)*(elt.second.m_value)*(1-((elt.second.m_value)/(elt.second.k_capacite)));
+                std::cout<<"Valeur pop APRES1: "<<elt.second.m_value<<std::endl;
+            }
+            ///Proie et pas de prédateur : augmente beaucoup
+            else if((elt.second.m_value>1)&&(elt.second.m_value<=100)&&(nombre_arrivantes!=0)&&(nombre_partantes==0))
+            {
+                if(elt.second.k_capacite==0)
+                {
+                    elt.second.k_capacite=elt.second.m_value/1000;
+                }
+                elt.second.coeff_croissance*=100;
+                std::cout<<"Valeur pop AVANT: "<<elt.second.m_value<<std::endl;
+                elt.second.m_value+=(elt.second.coeff_croissance)*(elt.second.m_value)*(1-((elt.second.m_value)/(elt.second.k_capacite)));
+                std::cout<<"Valeur pop APRES1: "<<elt.second.m_value<<std::endl;
+            }
+            ///Pas de proie et prédateur
+            else if((elt.second.m_value>1)&&(elt.second.m_value<=100)&&(nombre_arrivantes==0)&&(nombre_partantes!=0))
+            {
+                std::cout<<"Valeur pop AVANT: "<<elt.second.m_value<<std::endl;
+                for (auto &elm : arretes_partantes)
+                {
+                    ///On soustrait le produit de son poids avec le sommet reliÃ© au coeff k
+                    elt.second.m_value-=0.000015*(elm.m_weight)*(m_vertices[elm.m_to].m_value);
+                }
+                std::cout<<"Valeur pop APRES1: "<<elt.second.m_value<<std::endl;
+            }
+            ///Si valeur superieure a 100
+            if (elt.second.m_value>100)
+            {
+                ///On ramene a 100
+                elt.second.m_value=100;
+            }
+            ///Si ça vaut 100
+            if((elt.second.m_value==100)&&(elt.second.k_capacite!=0))
+            {
+                elt.second.coeff_croissance=-0.0003;
+                elt.second.m_value+=(elt.second.coeff_croissance)*(elt.second.m_value)*(1-((elt.second.m_value)/(elt.second.k_capacite)));
+                for (auto &elm : arretes_partantes)
+                {
+                    ///On soustrait le produit de son poids avec le sommet reliÃ© au coeff k
+                    elt.second.m_value-=(coeff_out)*(elm.m_weight/100)*(m_vertices[elm.m_to].m_value);
+                }
+            }
+            ///Si l'espèce ne peut plus se reproduire
+            if(elt.second.m_value<=1)
+            {
+                elt.second.m_value=0;
+            }
+            ///Pas de pop négative
+            if(elt.second.m_value<0)
+            {
+                elt.second.m_value=0;
+                ///Croix rouge sur le sommet
+            }
+            elt.second.k_capacite=0;
+        }
+    }
+}
+
+double Graph::calculK(std::vector<Edge> ar_arriv)
+{
+    double *k = new double;
+    *k=0;
+    for(auto &elm : ar_arriv)
+    {
+        *k+=(elm.m_weight)*(m_vertices[elm.m_from].m_value);
+    }
+    return *k;
+    delete k;
+}
+
+void Graph::initia()
+{
+    for(auto &elm : m_vertices)
+    {
+        elm.second.coeff_croissance=0;
+    }
+}
+
+void Graph::random()
+{
+    for (auto &elm : m_vertices)
+    {
+        elm.second.m_value=rand()%100+1;
+    }
+    for (auto &elm : m_edges)
+    {
+        elm.second.m_weight=rand()%100+1;
+    }
+}
+
+void Graph::croix_rouge()
+{
+    for(auto &elm:m_vertices)
+    {
+        if(elm.second.m_value==0)
+        {
+            elm.second.m_interface->m_img2.set_pic_name("croix_rouge.bmp");
+        }
+        else if(elm.second.m_value!=0)
+        {
+            elm.second.m_interface->m_img2.set_pic_name("");
+        }
+    }
+}
 bool* Graph::recherche_cmp(int i)
 {
-     bool* marquage = new bool[(int)m_vertices.size()]; ///Tableau de booléens qui dit si un sommet a été visité ou non
+    bool* marquage = new bool[(int)m_vertices.size()]; ///Tableau de booléens qui dit si un sommet a été visité ou non
     bool* pred, *succ; ///Tableau de booléens pour dire si chaque sommet admet un prédecesseur (pred) ou un successeur (succ)
     bool* cmp = new bool[(int)m_vertices.size()];; ///Tableau de booléens pour dire si un sommet fait partie ou non de la composante fortement connexe retournée
     bool suivant=true; ///Booléen pour dire si il reste des sommets à visiter
@@ -1459,6 +1956,7 @@ bool* Graph::recherche_cmp(int i)
     }
     return cmp;
 }
+
 /// Aide à l'ajout de sommets interfacés
 void Graph::add_interfaced_vertex(int idx, double value, int x, int y, std::string pic_name, int pic_idx )
 {
