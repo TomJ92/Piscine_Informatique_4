@@ -1198,7 +1198,7 @@ void Graph::rendreConti(int num)
         indiceForI[1][idx]=el.first;
         idx++;
     }
-    for(int i=0; i<m_vertices.size(); i++)
+    for(int i=0; i<(int)m_vertices.size(); i++)
     {
         std::cout<<indiceForI[0][i]<<" "<<indiceForI[1][i]<<std::endl;
 
@@ -1206,14 +1206,14 @@ void Graph::rendreConti(int num)
     idx=0;
     for(auto & el:m_edges)
     {
-        for(int j=0; j<m_vertices.size(); j++)
+        for(int j=0; j<(int)m_vertices.size(); j++)
         {
             if(indiceForI[1][j]==el.second.m_from&&indiceForI[1][j]>=num)
             {
                 el.second.m_from=indiceForI[0][j];
             }
         }
-        for(int j=0; j<m_vertices.size(); j++)
+        for(int j=0; j<(int)m_vertices.size(); j++)
         {
             if(indiceForI[1][j]==el.second.m_to&&indiceForI[1][j]>=num)
             {
@@ -1286,7 +1286,6 @@ void Graph::addVertex()
 {
     ///on regarde l'indice le plus grand de la map d'arete
     int indice;
-    int number1;
     std::string name;
     std::string number;
     std::string picName="clown1.jpg";
@@ -1442,7 +1441,7 @@ void Graph::k_connex(std::vector<int>& inter, std::vector<std::vector <int>>& al
             {
                 m_toursDeBoucle++;
                 good=true;
-                for(int i=0; i<allCombi.size(); i++)
+                for(int i=0; i<(int)allCombi.size(); i++)
                 {
                     if(allCombi[i]==inter)
                     {
@@ -1465,7 +1464,6 @@ void Graph::k_connex(std::vector<int>& inter, std::vector<std::vector <int>>& al
 
 bool Graph::graphConnex(int idx)
 {
-
     int inter;
     int indice1=0;
     int indice2=0;
@@ -1480,7 +1478,7 @@ bool Graph::graphConnex(int idx)
     {
         inter=file.front();
         file.pop();
-        for(int i=0; i<m_vertices[inter].m_in.size(); i++)
+        for(int i=0; i<(int)m_vertices[inter].m_in.size(); i++)
         {
             if(m_vertices[m_edges[m_vertices[inter].m_in[i]].m_from].m_existe&&!m_vertices[m_edges[m_vertices[inter].m_in[i]].m_from].m_marqueur)
             {
@@ -1489,7 +1487,7 @@ bool Graph::graphConnex(int idx)
             }
 
         }
-        for(int i=0; i<m_vertices[inter].m_out.size(); i++)
+        for(int i=0; i<(int)m_vertices[inter].m_out.size(); i++)
         {
             if(m_vertices[m_edges[m_vertices[inter].m_out[i]].m_to].m_existe&&!m_vertices[m_edges[m_vertices[inter].m_out[i]].m_to].m_marqueur)
             {
@@ -1528,31 +1526,31 @@ void Graph::afficher_k_connex(std::vector<int>& inter,std::vector<std::vector <i
     std::vector<std::vector <int>> alreadyUse;
     int indice=0;
     bool good;
-    for(int i=0; i<allCombi.size(); i++)
+    for(int i=0; i<(int)allCombi.size(); i++)
     {
-        if(allCombi[i].size()<poids_min)
+        if((int)allCombi[i].size()<poids_min)
         {
             poids_min=allCombi[i].size();
         }
     }
-    for(int i=0; i<allCombi.size(); i++)
+    for(int i=0; i<(int)allCombi.size(); i++)
     {
-        if(allCombi[i].size()==poids_min)
+        if((int)allCombi[i].size()==poids_min)
         {
             allCombMin.push_back(allCombi[i]);
         }
     }
-    for(int i=0; i<allCombMin.size(); i++)
+    for(int i=0; i<(int)allCombMin.size(); i++)
     {
         inter=allCombMin[i];
 
         indice=0;
         good=true;
-        for(int j=0; j<alreadyUse.size(); j++)
+        for(int j=0; j<(int)alreadyUse.size(); j++)
         {
-            for(int k=0; k<alreadyUse[i].size(); i++)
+            for(int k=0; k<(int)alreadyUse[i].size(); i++)
             {
-                for(int l=0; l<inter.size(); l++)
+                for(int l=0; l<(int)inter.size(); l++)
                 {
                     if(inter[l]==alreadyUse[j][k])
                     {
@@ -1586,12 +1584,12 @@ void Graph::afficher_k_connex(std::vector<int>& inter,std::vector<std::vector <i
 //            std::cout<<std::endl;
 //        }
 //    }
-    for(int i=0; i<allCombiMin2.size(); i++)
+    for(int i=0; i<(int)allCombiMin2.size(); i++)
     {
-        if(allCombiMin2.size()!=0)
+        if((int)allCombiMin2.size()!=0)
         {
             std::cout<<"- ";
-            for(int j=0; j<allCombiMin2[i].size(); j++)
+            for(int j=0; j<(int)allCombiMin2[i].size(); j++)
             {
                 std::cout<<allCombiMin2[i][j]<<" ";
             }
