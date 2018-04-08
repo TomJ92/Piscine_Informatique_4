@@ -779,7 +779,7 @@ void Graph::rendreConti(int num)
         indiceForI[1][idx]=el.first;
         idx++;
     }
-    for(int i=0; i<m_vertices.size(); i++)
+    for(unsigned int i=0; i<m_vertices.size(); i++)
     {
         std::cout<<indiceForI[0][i]<<" "<<indiceForI[1][i]<<std::endl;
 
@@ -787,14 +787,14 @@ void Graph::rendreConti(int num)
     idx=0;
     for(auto & el:m_edges)
     {
-        for(int j=0; j<m_vertices.size(); j++)
+        for(unsigned int j=0; j<m_vertices.size(); j++)
         {
             if(indiceForI[1][j]==el.second.m_from&&indiceForI[1][j]>=num)
             {
                 el.second.m_from=indiceForI[0][j];
             }
         }
-        for(int j=0; j<m_vertices.size(); j++)
+        for(unsigned int j=0; j<m_vertices.size(); j++)
         {
             if(indiceForI[1][j]==el.second.m_to&&indiceForI[1][j]>=num)
             {
@@ -1378,7 +1378,7 @@ void Graph::croissance_sommets(clock_t temps)
             **/
             std::cout<<"k vaut "<<elt.second.k_capacite<<std::endl;
             ///Equation de dynamique de population si on a assez de population et qu'on a des proies et des prédateurs
-            if((elt.second.m_value>1)&&(elt.second.m_value<100)&&(nombre_arrivantes!=0)&&(nombre_partantes!=0))
+            if((elt.second.m_value>1)&&(elt.second.m_value<=100)&&(nombre_arrivantes!=0)&&(nombre_partantes!=0))
             {
                 std::cout<<"Valeur pop AVANT : "<<elt.second.m_value<<std::endl;
                 if (elt.second.k_capacite==0)
@@ -1395,7 +1395,7 @@ void Graph::croissance_sommets(clock_t temps)
                 std::cout<<"Valeur pop APRES2: "<<elt.second.m_value<<std::endl;
             }
             ///Pas de proies et pas de prédateurs : pop diminue
-            else if((elt.second.m_value>1)&&(elt.second.m_value<100)&&(nombre_arrivantes==0)&&(nombre_partantes==0))
+            else if((elt.second.m_value>1)&&(elt.second.m_value<=100)&&(nombre_arrivantes==0)&&(nombre_partantes==0))
             {
                 ///k petit pour que diminue
                 elt.second.k_capacite=0.01;
@@ -1406,7 +1406,7 @@ void Graph::croissance_sommets(clock_t temps)
                 std::cout<<"Valeur pop APRES1: "<<elt.second.m_value<<std::endl;
             }
             ///Proie et pas de prédateur : augmente beaucoup
-            else if((elt.second.m_value>1)&&(elt.second.m_value<100)&&(nombre_arrivantes!=0)&&(nombre_partantes==0))
+            else if((elt.second.m_value>1)&&(elt.second.m_value<=100)&&(nombre_arrivantes!=0)&&(nombre_partantes==0))
             {
                 if(elt.second.k_capacite==0)
                 {
@@ -1418,7 +1418,7 @@ void Graph::croissance_sommets(clock_t temps)
                 std::cout<<"Valeur pop APRES1: "<<elt.second.m_value<<std::endl;
             }
             ///Pas de proie et prédateur
-            else if((elt.second.m_value>1)&&(elt.second.m_value<100)&&(nombre_arrivantes==0)&&(nombre_partantes!=0))
+            else if((elt.second.m_value>1)&&(elt.second.m_value<=100)&&(nombre_arrivantes==0)&&(nombre_partantes!=0))
             {
                 std::cout<<"Valeur pop AVANT: "<<elt.second.m_value<<std::endl;
                 for (auto &elm : arretes_partantes)

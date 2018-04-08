@@ -148,6 +148,8 @@ private :
         double k_capacite;
         /// Rythme de croissance
         double coeff_croissance;
+        bool m_marque;
+        int m_numero_compo_connexe;
 
     /// le POINTEUR sur l'interface associÃ©e, nullptr -> pas d'interface
     std::shared_ptr<VertexInterface> m_interface = nullptr;
@@ -228,7 +230,7 @@ private :
 
     /// un exemple de donnÃ©e associÃ©e Ã  l'arc, on peut en ajouter d'autres...
     double m_weight;
-    
+
     ///Marqueur
     bool m_marque;
 
