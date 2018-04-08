@@ -1515,7 +1515,6 @@ bool Graph::graphConnex(int idx)
     {
         return true;
     }
-
 }
 
 void Graph::afficher_k_connex(std::vector<int>& inter,std::vector<std::vector <int>>& allCombi)
@@ -1714,7 +1713,7 @@ std::map<int,std::vector<int>>  Graph::algo_forte_connexite()
                 aretes_composantes_connexes[j].m_from=composantes_connexes[m_vertices[aretes_composantes_connexes[j].m_from].m_numero_compo_connexe].front();
                 aretes_composantes_connexes[j].m_to=composantes_connexes[m_vertices[aretes_composantes_connexes[j].m_to].m_numero_compo_connexe].front();
             }
-            for(int j=0; j<nb_arete; j++) 
+            for(int j=0; j<nb_arete; j++)
             {
                 fichier << j << std::endl;
                 fichier << aretes_composantes_connexes[j].m_to << std::endl;
