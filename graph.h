@@ -1,7 +1,9 @@
 #ifndef GRAPH_H_INCLUDED
 #define GRAPH_H_INCLUDED
 #include <fstream>
+#include <queue>
 #include <iostream>
+#include <ctime>
 /**************************************************************
     Ici sont proposées 3 classes fondamentales
             Vertex (=Sommet)
@@ -118,6 +120,9 @@ class VertexInterface
         grman::WidgetCheckBox m_cross;
         ///bouton pour savoir quelle sommets pour les arêtes
         grman::WidgetButton m_button_addEdge;
+        grman::WidgetText m_textNum;
+
+        grman::WidgetImage m_img2;
 
 
     public :
@@ -149,6 +154,20 @@ class Vertex
 
         /// le POINTEUR sur l'interface associée, nullptr -> pas d'interface
         std::shared_ptr<VertexInterface> m_interface = nullptr;
+
+        ///indice des sommets
+        int m_VertexIn;
+        int m_VertexOut;
+
+        bool m_existe;
+        bool m_marqueur;
+        bool m_marque;
+        int m_numero_compo_connexe;
+        /// Cacapité de portage de l'environnement
+        double k_capacite;
+        /// Rythme de croissance
+        double coeff_croissance;
+        ///composante fortemenet connexe
 
         // Docu shared_ptr : https://msdn.microsoft.com/fr-fr/library/hh279669.aspx
         // La ligne précédente est en gros équivalent à la ligne suivante :
@@ -299,7 +318,28 @@ class GraphInterface
         grman::WidgetButton m_button_addEdge;
         grman::WidgetText m_text_addE;
         grman::WidgetText m_text_edge;
-
+        ///bouton pour ne plus ajouter sommet
+        grman::WidgetButton m_button_noAddEdge;
+        ///bouton pour afficher les combinaison possible
+        grman::WidgetButton m_button_k_connex;
+        grman::WidgetText m_text_k;
+        grman::WidgetText m_text_connex;
+        ///bouton pour afficher les composante fortement connexe
+        grman::WidgetButton m_button_connex;
+        grman::WidgetText m_text_compo;
+        grman::WidgetText m_text_connexe;
+        ///bouton pour lancer la simulation
+        grman::WidgetButton m_button_start;
+        grman::WidgetText m_text_run;
+        ///bouton pour arreter la simulation
+        grman::WidgetButton m_button_stop;
+        grman::WidgetText m_text_stop;
+        ///bouton pour mettre tout aléatoire
+        grman::WidgetButton m_button_random;
+        grman::WidgetText m_text_random;
+        ///petit bouton pour plus afficher les composante connexe
+        grman::WidgetButton m_button_restartConnex;
+        ///bouton pour afficher graphe réduit
 
     public :
 
@@ -345,6 +385,9 @@ class Graph
         ///pour éviter de selectionner 2 fois le même sommets
         int m_vertexAlreadyUse;
 
+        int m_toursDeBoucle;
+        int m_toursDeBoucleMax;
+
     public:
 
         /// Les constructeurs sont à compléter selon vos besoin...
@@ -352,7 +395,7 @@ class Graph
         Graph (GraphInterface *interface=nullptr) :
             m_interface(interface)  {  }
 
-        void add_interfaced_vertex(int idx, double value, int x, int y, std::string pic_name="", int pic_idx=0 );
+        void add_interfaced_vertex(int idx, double value, int x, int y, std::string pic_name="",int pic_idx=0 );
         void add_interfaced_edge(int idx, int vert1, int vert2, double weight=0);
 
         /// Méthode spéciale qui construit un graphe arbitraire (démo)
@@ -363,7 +406,7 @@ class Graph
 
 
         /// La méthode update à appeler dans la boucle de jeu pour les graphes avec interface
-        void update();
+        void update(clock_t ini, bool animation);
         ///ss prog qui remplit un graphe en fonction d'un fichier
         void ReadFile(std::string fileName, int num);
         ///ss prog qui sauve un graphe en remplissant un fichier
@@ -385,6 +428,30 @@ class Graph
         void addEdge(std::vector<int> m_newVertexForEdge);
         ///mettre tout les bouton à false
         void initButton();
+        ///k-sommet connexité
+        void kVertexConnexite();
+        ///ajouter une combinaison
+        void addCombi(int j, int k, int nb,std::vector<std::vector <int>> &m_allCombi,int i=0);
+        ///cheminInverse
+        bool cheminInverse(int depart,int arrive);
+        ///debut k connexité
+        void init_k_connex();
+        ///k connexité
+        void k_connex(std::vector<int>& inter,std::vector<std::vector <int>>& m_allCombi);
+        ///boléen pour savoir si le chemin est bon
+        bool graphConnex(int idx);
+        ///afficher les combinaison possible
+        void afficher_k_connex(std::vector<int>& inter,std::vector<std::vector <int>>& allCombi);
+        ///forte Connex
+        std::map<int,std::vector<int>> algo_forte_connexite();
+        bool* recherche_cmp(int i);
+        void rendreConti(int num);
+        void rendreConti2(std::string fileName);
+        void croissance_sommets(clock_t temps);
+        double calculK(std::vector<Edge> ar_arriv);
+        void initia();
+        void croix_rouge();
+        void random();
 };
 
 
