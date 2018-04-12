@@ -25,8 +25,9 @@ void afficher()
     menu_graphe3=load_bitmap("menu/MENU-Graphe3.bmp",0);
     menu_explications=load_bitmap("menu/MENU-Explications.bmp",0);
     menu_quitter=load_bitmap("menu/MENU-Quitter.bmp",0);
-  //  int i=0;
-    //bool m;
+    int i=0;
+    bool animation;
+    unsigned int compteur=0;
     ///Déclaration des variables
     bool quitter=false;
     unsigned int choix=0;
@@ -97,12 +98,13 @@ void afficher()
         case 0:
             break;
         case 1 :
-            {
-            clock_t temps_ini;
-            unsigned int compteur=0;
-            temps_ini=(double)clock();
-            bool animation=false;
+        {
             g.ReadFile("Graphe1",1);
+            clock_t temps_ini;
+            animation=false;
+            compteur=0;
+            temps_ini=(double)clock();
+
             /// Vous gardez la main sur la "boucle de jeu"
             /// ( contrairement à des frameworks plus avancés )
             while ( !g.getQuitGraph() )
@@ -111,115 +113,73 @@ void afficher()
                 g.update(temps_ini,animation);
                 /// Mise à jour générale (clavier/souris/buffer etc...)
                 grman::mettre_a_jour();
-                if(key[KEY_1_PAD])
-                {
-                    animation=true;
-                }
-                if(key[KEY_2_PAD])
-                {
-                    animation=false;
-                }
                 compteur++;
                 if (compteur%30==0)
                     temps_ini=temps_ini+1000;
-                if(key[KEY_S])
-                {
-                    g.algo_forte_connexite();
-                    rest(300);
-                }
-                else if(key[KEY_O])
-                {
-                    g.algo_forte_connexite();
-                    rest(200);
-                }
             }
             g.initialisation();
             rest(300);
             break;
-            }
+        }
         case 2:
-            {
-            clock_t temps_ini;
-            unsigned int compteur=0;
-            temps_ini=(double)clock();
-            bool animation=false;
+        {
             g.ReadFile("Graphe2",2);
-            /// Vous gardez la main sur la "boucle de jeu"
-            /// ( contrairement à des frameworks plus avancés )
-            while ( !g.getQuitGraph() )
-            {
-                /// Il faut appeler les méthodes d'update des objets qui comportent des widgets
-                g.update(temps_ini,animation);
-                /// Mise à jour générale (clavier/souris/buffer etc...)
-                grman::mettre_a_jour();
-                if(key[KEY_1_PAD])
-                {
-                    animation=true;
-                }
-                if(key[KEY_2_PAD])
-                {
-                    animation=false;
-                }
-                compteur++;
-                if (compteur%30==0)
-                    temps_ini=temps_ini+1000;
-                if(key[KEY_S])
-                {
-                    g.init_k_connex();
-                    rest(300);
-                    std::cout<<"good"<<std::endl;
-                }
-                else if(key[KEY_O])
-                {
-                    g.algo_forte_connexite();
-                    rest(200);
-                }
-            }
-            g.initialisation();
-            rest(300);
-            break;
-            }
-        case 3:
-            {
             clock_t temps_ini;
-            unsigned int compteur=0;
+            animation=false;
+            compteur=0;
             temps_ini=(double)clock();
-            bool animation=false;
-            g.ReadFile("Graphe3",3);
+
             /// Vous gardez la main sur la "boucle de jeu"
             /// ( contrairement à des frameworks plus avancés )
             while ( !g.getQuitGraph() )
             {
                 /// Il faut appeler les méthodes d'update des objets qui comportent des widgets
                 g.update(temps_ini,animation);
-                if(key[KEY_1_PAD])
+                /// Mise à jour générale (clavier/souris/buffer etc...)
+                grman::mettre_a_jour();
+                compteur++;
+                if (compteur%30==0)
+                    temps_ini=temps_ini+1000;
+                }
+            g.initialisation();
+            rest(300);
+            break;
+        }
+        case 3:
+        {
+            g.ReadFile("Graphe3",3);
+            clock_t temps_ini;
+            compteur=0;
+            animation=false;
+            temps_ini=(double)clock();
+            /// Vous gardez la main sur la "boucle de jeu"
+            /// ( contrairement à des frameworks plus avancés )
+            while ( !g.getQuitGraph() )
+            {
+                /// Il faut appeler les méthodes d'update des objets qui comportent des widgets
+                g.update(temps_ini,animation);
+                /// Mise à jour générale (clavier/souris/buffer etc...)
+                grman::mettre_a_jour();
+                if(key[KEY_S])
                 {
                     animation=true;
                 }
-                if(key[KEY_2_PAD])
+                if(key[KEY_M])
                 {
                     animation=false;
                 }
                 compteur++;
                 if (compteur%30==0)
+
+                compteur++;
+                if (compteur%30==0)
                     temps_ini=temps_ini+1000;
-                if(key[KEY_S])
-                {
-                    g.init_k_connex();
-                    rest(300);
                 }
-                else if(key[KEY_O])
-                {
-                    g.algo_forte_connexite();
-                    rest(200);
-                }
-                /// Mise à jour générale (clavier/souris/buffer etc...)
-                grman::mettre_a_jour();
-            }
             g.initialisation();
             rest(300);
             break;
-            }
+        }
+
         ///Si on clique sur "Explications"
         case 4:
             regles();
