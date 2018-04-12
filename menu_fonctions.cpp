@@ -1,3 +1,4 @@
+
 #include "grman/grman.h"
 #include <iostream>
 #define LARGEURECRAN 2056
@@ -16,7 +17,7 @@ void afficher()
     ///On initialise allegro
     grman::init();
     grman::set_pictures_path("pics");
-    ///On déclare les bitmaps
+    ///On dÃ©clare les bitmaps
     BITMAP* menu_p,*menu_graphe1,*menu_graphe2,*menu_graphe3,*menu_explications,*menu_quitter,*buffer=create_bitmap(HAUTEURECRAN,LARGEURECRAN);
     Graph g;
     menu_p=load_bitmap("menu/MENU_P.bmp",0);
@@ -26,9 +27,13 @@ void afficher()
     menu_explications=load_bitmap("menu/MENU-Explications.bmp",0);
     menu_quitter=load_bitmap("menu/MENU-Quitter.bmp",0);
     int i=0;
+<<<<<<< HEAD
     bool animation;
     unsigned int compteur=0;
     ///Déclaration des variables
+=======
+    ///DÃ©claration des variables
+>>>>>>> 3e970ea5c73e26c768074acc39a950b1286b675d
     bool quitter=false;
     unsigned int choix=0;
     ///Tant qu'on ne quitte pas le jeu
@@ -42,7 +47,7 @@ void afficher()
             ///Si on clique gauche avec la souris
             if(mouse_b&1)
             {
-                ///On sélectionne le premier choix
+                ///On sÃ©lectionne le premier choix
                 choix=1;
             }
         }
@@ -54,7 +59,7 @@ void afficher()
             ///Si on clique
             if(mouse_b&1)
             {
-                ///On sélectionne le deuxième choix
+                ///On sÃ©lectionne le deuxiÃ¨me choix
                 choix=2;
             }
         }
@@ -66,11 +71,11 @@ void afficher()
             ///Si on clique avec la souris
             if(mouse_b&1)
             {
-                ///On sélectionne le troisième choix
+                ///On sÃ©lectionne le troisiÃ¨me choix
                 choix=3;
             }
         }
-        ///Si on sélectionne Explications
+        ///Si on sÃ©lectionne Explications
         else if((mouse_x<187)&& (mouse_y>489) && (mouse_y<533))
         {
             blit(menu_explications,buffer,0,0,0,0,HAUTEURECRAN,LARGEURECRAN);
@@ -106,12 +111,18 @@ void afficher()
             temps_ini=(double)clock();
 
             /// Vous gardez la main sur la "boucle de jeu"
-            /// ( contrairement à des frameworks plus avancés )
+            /// ( contrairement Ã  des frameworks plus avancÃ©s )
             while ( !g.getQuitGraph() )
             {
+<<<<<<< HEAD
                 /// Il faut appeler les méthodes d'update des objets qui comportent des widgets
                 g.update(temps_ini,animation);
                 /// Mise à jour générale (clavier/souris/buffer etc...)
+=======
+                /// Il faut appeler les mÃ©thodes d'update des objets qui comportent des widgets
+                g.update();
+                /// Mise Ã  jour gÃ©nÃ©rale (clavier/souris/buffer etc...)
+>>>>>>> 3e970ea5c73e26c768074acc39a950b1286b675d
                 grman::mettre_a_jour();
                 compteur++;
                 if (compteur%30==0)
@@ -130,12 +141,18 @@ void afficher()
             temps_ini=(double)clock();
 
             /// Vous gardez la main sur la "boucle de jeu"
-            /// ( contrairement à des frameworks plus avancés )
+            /// ( contrairement Ã  des frameworks plus avancÃ©s )
             while ( !g.getQuitGraph() )
             {
+<<<<<<< HEAD
                 /// Il faut appeler les méthodes d'update des objets qui comportent des widgets
                 g.update(temps_ini,animation);
                 /// Mise à jour générale (clavier/souris/buffer etc...)
+=======
+                /// Il faut appeler les mÃ©thodes d'update des objets qui comportent des widgets
+                g.update();
+                /// Mise Ã  jour gÃ©nÃ©rale (clavier/souris/buffer etc...)
+>>>>>>> 3e970ea5c73e26c768074acc39a950b1286b675d
                 grman::mettre_a_jour();
                 compteur++;
                 if (compteur%30==0)
@@ -153,12 +170,18 @@ void afficher()
             animation=false;
             temps_ini=(double)clock();
             /// Vous gardez la main sur la "boucle de jeu"
-            /// ( contrairement à des frameworks plus avancés )
+            /// ( contrairement Ã  des frameworks plus avancÃ©s )
             while ( !g.getQuitGraph() )
             {
+<<<<<<< HEAD
                 /// Il faut appeler les méthodes d'update des objets qui comportent des widgets
                 g.update(temps_ini,animation);
                 /// Mise à jour générale (clavier/souris/buffer etc...)
+=======
+                /// Il faut appeler les mÃ©thodes d'update des objets qui comportent des widgets
+                g.update();
+                /// Mise Ã  jour gÃ©nÃ©rale (clavier/souris/buffer etc...)
+>>>>>>> 3e970ea5c73e26c768074acc39a950b1286b675d
                 grman::mettre_a_jour();
                 if(key[KEY_S])
                 {

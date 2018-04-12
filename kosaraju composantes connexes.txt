@@ -1,0 +1,70 @@
+﻿void Graph::DFS(int i, bool marquage[]) ///Parcours en profondeur (fonctionne)
+{
+    marquage[i]=true;
+    std::cout << i << " ";
+    for(unsigned int j=0; j<m_vertices[i].m_out.size(); j++) 
+    {
+        if(!marquage[m_vertices[i].m_out[j]]) 
+            DFS(m_vertices[i].m_out[j], marquage);
+    }
+}
+
+Graph Graph::Transposee(std::string fichier) ///Fonctionne
+{
+    Graph g;
+    g.ReadFile(fichier); ///Exemple à adapter pour chaque graphe
+    for(int i=0; i<g.m_ordre; i++) ///Pour chaque sommet du graphe, ses prédecesseurs deviennent ses successeurs et vice versa
+    {
+        g.m_vertices[i].m_in.clear();
+        g.m_vertices[i].m_out.clear();
+        for(unsigned int j=0; j<m_vertices[i].m_in.size(); j++)
+            g.m_vertices[i].m_out.push_back(m_vertices[i].m_in[j]);
+        for(unsigned int j=0; j<m_vertices[i].m_out.size(); j++)
+            g.m_vertices[i].m_in.push_back(m_vertices[i].m_out[j]);
+    }
+    for(int i=0; i<m_nbArete; i++) ///Inversion des arêtes
+    {
+        g.m_edges[i].setFrom(m_edges[i].m_to);
+        g.m_edges[i].setTo(m_edges[i].m_from);
+    }
+    return g; ///On retourne le graphe inverse g
+}
+
+void Graph::remplissage_pile(int i, bool marquage[], std::stack<int> sommets) ///Petit probleme ici. Semblable à un DFS, mais on range le sommet dans la pile de traitement à la fin
+{
+    marquage[i]=true;
+    for(unsigned int j=0; j<m_vertices[i].m_out.size(); j++)
+    {
+        if(!marquage[m_vertices[i].m_out[j]])
+            remplissage_pile(m_vertices[i].m_out[j], marquage, sommets);
+    }
+    sommets.push(i);
+}
+
+void Graph::Kosaraju(std::string fichier) ///Algorithme qui donne les composantes fortement connexes et de quels somemts sont-ils composés
+{
+    std::stack<int> pile_de_visite; ///Pile pour traiter les différents
+    Graph trp=Graph(); ///On déclare le graphe inverse du notre, en le construisant d'abord
+    int top_de_reserve;
+    bool* marques = new bool[m_ordre]; ///Déclaration d'un tableau de marquage
+    for(int i=0; i<m_ordre; i+ ///Initialisation du tableau de marquage
+        marques[i]=false;
+    for(int i=0; i<m_ordre; i++) ///Remplissage de la pile (petit malentendu pour le graphe des clowns où cette pile est vide tout le long...)
+    {
+        if(!marques[i])
+            remplissage_pile(i, marques, pile_de_visite);
+    }
+    trp=Transposee(fichier); On inclut le graphe inverse
+    for(int i=0; i<m_ordre; i++) ///Réinitialisation du tableau de marquage
+        marques[i]=false;
+    while(!pile_de_visite.empty()) ///Tant que la pile n'est pas vide, faire un DFS du graphe inverse
+    {
+        top_de_reserve=pile_de_visite.top(); ///Garder le haut de pile en réserve
+        pile_de_visite.pop(); ///Faire défiler la pile
+        if(!marques[top_de_reserve]) ///Si ce fameux haut de pile n'a pas été visité, on le marque comme visité
+        {
+            trp.DFS(top_de_reserve, marques); ///Une ligne correspond à une composante fortement connexe
+            std::cout << std::endl; ///Saut de ligne pour la prochaine composante
+        }
+    }
+}
