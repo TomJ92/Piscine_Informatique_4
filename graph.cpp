@@ -4,7 +4,7 @@
                     VERTEX
 ****************************************************/
 
-/// Le constructeur met en place les Ã©lÃ©ments de l'interface
+/// Le constructeur met en place les éléments de l'interface
 VertexInterface::VertexInterface(int idx, int x, int y, std::string pic_name, int pic_idx)
 {
     std::string num;
@@ -13,9 +13,9 @@ VertexInterface::VertexInterface(int idx, int x, int y, std::string pic_name, in
     m_top_box.set_dim(130, 100);
     m_top_box.set_moveable();
 
-    // Le slider de rÃ©glage de valeur
+    // Le slider de réglage de valeur
     m_top_box.add_child( m_slider_value );
-    m_slider_value.set_range(0.0, 100.0);  // Valeurs arbitraires, Ã  adapter...
+    m_slider_value.set_range(0.0, 100.0);  // Valeurs arbitraires, à adapter...
     m_slider_value.set_dim(20,80);
     m_slider_value.set_gravity_xy(grman::GravityX::Left, grman::GravityY::Up);
 
@@ -47,7 +47,7 @@ VertexInterface::VertexInterface(int idx, int x, int y, std::string pic_name, in
     m_cross.set_dim(10,10);
     m_cross.set_pos(115,0);
 
-    ///boite qui permet de savoir si on ajoute une arÃªte dans ce sommet
+    ///boite qui permet de savoir si on ajoute une arête dans ce sommet
     m_top_box.add_child(m_button_addEdge);
     m_button_addEdge.set_bg_color(BLEU);
     m_button_addEdge.set_dim(10,10);
@@ -65,27 +65,27 @@ VertexInterface::VertexInterface(int idx, int x, int y, std::string pic_name, in
 }
 
 
-/// Gestion du Vertex avant l'appel Ã  l'interface
+/// Gestion du Vertex avant l'appel à l'interface
 void Vertex::pre_update()
 {
     if (!m_interface)
         return;
 
-    /// Copier la valeur locale de la donnÃ©e m_value vers le slider associÃ©
+    /// Copier la valeur locale de la donnée m_value vers le slider associé
     m_interface->m_slider_value.set_value(m_value);
 
-    /// Copier la valeur locale de la donnÃ©e m_value vers le label sous le slider
+    /// Copier la valeur locale de la donnée m_value vers le label sous le slider
     m_interface->m_label_value.set_message( std::to_string( (int)m_value) );
 }
 
 
-/// Gestion du Vertex aprÃ¨s l'appel Ã  l'interface
+/// Gestion du Vertex après l'appel à l'interface
 void Vertex::post_update()
 {
     if (!m_interface)
         return;
 
-    /// Reprendre la valeur du slider dans la donnÃ©e m_value locale
+    /// Reprendre la valeur du slider dans la donnée m_value locale
     m_value = m_interface->m_slider_value.get_value();
 }
 
@@ -93,7 +93,7 @@ void Vertex::post_update()
                     EDGE
 ****************************************************/
 
-/// Le constructeur met en place les Ã©lÃ©ments de l'interface
+/// Le constructeur met en place les éléments de l'interface
 EdgeInterface::EdgeInterface(Vertex& from, Vertex& to,int numS1, int numS2)
 {
     // Le WidgetEdge de l'interface de l'arc
@@ -102,7 +102,7 @@ EdgeInterface::EdgeInterface(Vertex& from, Vertex& to,int numS1, int numS2)
         std::cerr << "Error creating EdgeInterface between vertices having no interface" << std::endl;
         throw "Bad EdgeInterface instanciation";
     }
-    ///variable qui permet d'afficher les sommmets des arÃªtes
+    ///variable qui permet d'afficher les sommmets des arêtes
     std::string name;
     std::string sommet1;
     std::string sommet2;
@@ -111,14 +111,14 @@ EdgeInterface::EdgeInterface(Vertex& from, Vertex& to,int numS1, int numS2)
     m_top_edge.attach_to(to.m_interface->m_top_box);
     m_top_edge.reset_arrow_with_bullet();
 
-    // Une boite pour englober les widgets de rÃ©glage associÃ©s
+    // Une boite pour englober les widgets de réglage associés
     m_top_edge.add_child(m_box_edge);
     m_box_edge.set_dim(40,75);
     m_box_edge.set_bg_color(BLANCBLEU);
 
-    // Le slider de rÃ©glage de valeur
+    // Le slider de réglage de valeur
     m_box_edge.add_child( m_slider_weight );
-    m_slider_weight.set_range(0.0, 200.0);  // Valeurs arbitraires, Ã  adapter...
+    m_slider_weight.set_range(0.0, 200.0);  // Valeurs arbitraires, à adapter...
     m_slider_weight.set_dim(10,45);
     m_slider_weight.set_pos(13,13);
 
@@ -126,13 +126,13 @@ EdgeInterface::EdgeInterface(Vertex& from, Vertex& to,int numS1, int numS2)
     m_box_edge.add_child( m_label_weight );
     m_label_weight.set_pos(15,65);
 
-    ///croix pour supprimer une arÃªte
+    ///croix pour supprimer une arête
     m_box_edge.add_child(m_cross);
     m_cross.set_bg_color(BLEUCLAIR);
     m_cross.set_dim(7,7);
     m_cross.set_pos(0,63);
 
-    ///texte qui affiche les sommets de l'arÃªte
+    ///texte qui affiche les sommets de l'arête
     m_box_edge.add_child(m_text_number);
     sommet1=std::to_string(numS1);
     sommet2=std::to_string(numS2);
@@ -142,29 +142,29 @@ EdgeInterface::EdgeInterface(Vertex& from, Vertex& to,int numS1, int numS2)
 }
 
 
-/// Gestion du Edge avant l'appel Ã  l'interface
+/// Gestion du Edge avant l'appel à l'interface
 void Edge::pre_update()
 {
     if (!m_interface)
         return;
 
-    /// Copier la valeur locale de la donnÃ©e m_weight vers le slider associÃ©
+    /// Copier la valeur locale de la donnée m_weight vers le slider associé
     m_interface->m_slider_weight.set_value(m_weight);
 
-    /// Copier la valeur locale de la donnÃ©e m_weight vers le label sous le slider
+    /// Copier la valeur locale de la donnée m_weight vers le label sous le slider
     m_interface->m_label_weight.set_message( std::to_string( (int)m_weight ) );
 
-    ///faire grossir la flÃªche en fonction de son poids
+    ///faire grossir la flêche en fonction de son poids
     m_interface->m_top_edge.grossir(m_weight);
 }
 
-/// Gestion du Edge aprÃ¨s l'appel Ã  l'interface
+/// Gestion du Edge après l'appel à l'interface
 void Edge::post_update()
 {
     if (!m_interface)
         return;
 
-    /// Reprendre la valeur du slider dans la donnÃ©e m_weight locale
+    /// Reprendre la valeur du slider dans la donnée m_weight locale
     m_weight = m_interface->m_slider_weight.get_value();
 }
 
@@ -174,8 +174,8 @@ void Edge::post_update()
                     GRAPH
 ****************************************************/
 
-/// Ici le constructeur se contente de prÃ©parer un cadre d'accueil des
-/// Ã©lÃ©ments qui seront ensuite ajoutÃ©s lors de la mise ne place du Graphe
+/// Ici le constructeur se contente de préparer un cadre d'accueil des
+/// éléments qui seront ensuite ajoutés lors de la mise ne place du Graphe
 GraphInterface::GraphInterface(int x, int y, int w, int h)
 {
     m_top_box.set_dim(1000,740);
@@ -233,7 +233,7 @@ GraphInterface::GraphInterface(int x, int y, int w, int h)
     m_button_addEdge.set_pos(15,165);
     m_button_addEdge.set_bg_color(SABLE);
 
-    ///texte d'ajout d'arÃªte
+    ///texte d'ajout d'arête
     m_button_addEdge.add_child(m_text_addE);
     m_text_addE.set_pos(13,5);
     m_text_addE.set_message("Add");
@@ -323,27 +323,21 @@ GraphInterface::GraphInterface(int x, int y, int w, int h)
     m_button_quit.add_child(m_text_quit);
     m_text_quit.set_pos(2,13);
     m_text_quit.set_message("Quitter");
-
-    m_tool_box.add_child(m_button_noAddEdge);
-    m_button_noAddEdge.set_dim(7,7);
-    m_button_noAddEdge.set_pos(68,175);
-    m_button_noAddEdge.set_bg_color(BLEUSOMBRE);
-
 }
 
 
-/// MÃ©thode spÃ©ciale qui construit un graphe arbitraire (dÃ©mo)
-/// Cette mÃ©thode est Ã  enlever et remplacer par un systÃ¨me
+/// Méthode spéciale qui construit un graphe arbitraire (démo)
+/// Cette méthode est à enlever et remplacer par un système
 /// de chargement de fichiers par exemple.
-/// Bien sÃ»r on ne veut pas que vos graphes soient construits
-/// "Ã  la main" dans le code comme Ã§a.
+/// Bien sûr on ne veut pas que vos graphes soient construits
+/// "à la main" dans le code comme ça.
 void Graph::make_example()
 {
     m_interface = std::make_shared<GraphInterface>(50, 0, 750, 600);
-    // La ligne prÃ©cÃ©dente est en gros Ã©quivalente Ã  :
+    // La ligne précédente est en gros équivalente à :
     // m_interface = new GraphInterface(50, 0, 750, 600);
 
-    /// Les sommets doivent Ãªtre dÃ©finis avant les arcs
+    /// Les sommets doivent être définis avant les arcs
     // Ajouter le sommet d'indice 0 de valeur 30 en x=200 et y=100 avec l'image clown1.jpg etc...
     add_interfaced_vertex(0, 30.0, 200, 100, "clown1.jpg");
     add_interfaced_vertex(1, 60.0, 400, 100, "clown2.jpg");
@@ -354,7 +348,7 @@ void Graph::make_example()
     add_interfaced_vertex(6,  0.0, 300, 500, "bad_clowns_xx3xx.jpg", 1);
     add_interfaced_vertex(7,  0.0, 500, 500, "bad_clowns_xx3xx.jpg", 2);
 
-    /// Les arcs doivent Ãªtre dÃ©finis entre des sommets qui existent !
+    /// Les arcs doivent être définis entre des sommets qui existent !
     // AJouter l'arc d'indice 0, allant du sommet 1 au sommet 2 de poids 50 etc...
     add_interfaced_edge(0, 1, 2, 50.0);
     add_interfaced_edge(1, 0, 1, 50.0);
@@ -368,7 +362,7 @@ void Graph::make_example()
     add_interfaced_edge(9, 3, 7, 80.0);
 }
 
-///sous programe qui rÃ©initialise les postions et les sommets initials en fonction d'un fichier texte
+///sous programe qui réinitialise les postions et les sommets initials en fonction d'un fichier texte
 void Graph::reinit(std::string fileName)
 {
     ///interface graphique
@@ -392,13 +386,13 @@ void Graph::reinit(std::string fileName)
     ///si on lit le fichier
     if(fichier)
     {
-        ///on rÃ©cupÃ©re l'ordre du graphe et on saute une ligne
+        ///on récupére l'ordre du graphe et on saute une ligne
         fichier>>m_ordre;
         getline(fichier,nom);
-        ///on se base sur le nb de sommet prÃ©sent dans le graphe
+        ///on se base sur le nb de sommet présent dans le graphe
         for(int i=0; i<m_ordre; i++)
         {
-            ///on remplit le numÃ©ro
+            ///on remplit le numéro
             fichier>>numS;
             getline(fichier,nom);
             ///sa valeur
@@ -415,12 +409,12 @@ void Graph::reinit(std::string fileName)
             ///on ajoute un vecteur
             add_interfaced_vertex(numS,valeur,xdep,ydep,pic_name);
         }
-        ///on stocke le nb d'arÃªte
+        ///on stocke le nb d'arête
         fichier>>m_nbArete;
         getline(fichier,nom);
         for(int i=0; i<m_nbArete; i++)
         {
-            ///on rÃ©cupÃ©re le numÃ©ro du sommet
+            ///on récupére le numéro du sommet
             fichier>>numS;
             getline(fichier,nom);
             ///sa position
@@ -431,7 +425,7 @@ void Graph::reinit(std::string fileName)
             ///sa valeur
             fichier>>valeur;
             getline(fichier,nom);
-            ///on ajoute une nouvelle arÃªte
+            ///on ajoute une nouvelle arête
             add_interfaced_edge(numS,xdep,ydep,valeur);
         }
         ///on indique un RESET
@@ -442,7 +436,7 @@ void Graph::reinit(std::string fileName)
     {
         throw std::string("Il n'exite pas de fichier portant ce nom");
     }
-    ///tout les paramÃ©tre permettant l'ajout deviennent faux
+    ///tout les paramétre permettant l'ajout deviennent faux
     setQuitGraph(false);
     m_ajouterNewEdge=false;
     m_addFrom=false;
@@ -464,13 +458,13 @@ void Graph::ReadFile(std::string fileName, int num)
     ///si on lit le fichier
     if(fichier)
     {
-        ///on rÃ©cupÃ©re l'ordre du graphe et on saute une ligne
+        ///on récupére l'ordre du graphe et on saute une ligne
         fichier>>m_ordre;
         getline(fichier,nom);
-        ///on se base sur le nb de sommet prÃ©sent dans le graphe
+        ///on se base sur le nb de sommet présent dans le graphe
         for(int i=0; i<m_ordre; i++)
         {
-            ///on remplit le numÃ©ro
+            ///on remplit le numéro
             fichier>>numS;
             getline(fichier,nom);
             ///sa valeur
@@ -488,17 +482,13 @@ void Graph::ReadFile(std::string fileName, int num)
             add_interfaced_vertex(numS,valeur,x,y,pic_name);
 
         }
-        ///on rÃ©cupÃ©re le nb d'arÃªte prÃ©sente dans notre graphe
+        ///on récupére le nb d'arête présente dans notre graphe
         fichier>>m_nbArete;
         std::cout<<m_nbArete<<std::endl;
-<<<<<<< HEAD
         ///en fonction de nb d'arête
-=======
-        ///en fonction de nb d'arÃªte
->>>>>>> 3e970ea5c73e26c768074acc39a950b1286b675d
         for(int i=0; i<m_nbArete; i++)
         {
-            ///on rÃ©cupÃ©re le numÃ©ro du sommet
+            ///on récupére le numéro du sommet
             fichier>>numS;
             getline(fichier,nom);
             ///sa position
@@ -509,24 +499,24 @@ void Graph::ReadFile(std::string fileName, int num)
             ///sa valeur
             fichier>>valeur;
             getline(fichier,nom);
-            ///on ajoute une nouvelle arÃªte
+            ///on ajoute une nouvelle arête
             add_interfaced_edge(numS,x,y,valeur);
 
         }
         ///on ferme le fichier
         fichier.close();
     }
-    ///si on arrive pas Ã  lire le fichier, on envoies un exception
+    ///si on arrive pas à lire le fichier, on envoies un exception
     else
     {
         throw std::string("Il n'exite pas de fichier portant ce nom");
     }
-    ///tout les paramÃ©tre permettant l'ajout deviennet faux
+    ///tout les paramétre permettant l'ajout deviennet faux
     setQuitGraph(false);
     m_ajouterNewEdge=false;
     m_addFrom=false;
     m_addTo=false;
-    ///si le vecteur n'a pas encore Ã©tÃ© rempli, on le remplit
+    ///si le vecteur n'a pas encore été rempli, on le remplit
     if(m_vertexForNewEdge.size()==0)
     {
         m_vertexForNewEdge.push_back(0);
@@ -541,7 +531,7 @@ void Graph::saveFile(std::string fileName)
     std::string number;
     ///position du sommet
     int posInter=0;
-    ///string du nom de l'image qui change en focntion du numÃ©ro de graphe
+    ///string du nom de l'image qui change en focntion du numéro de graphe
     std::string name;
     ///notre fichier txt
     std::ofstream fichier(fileName+ ".txt",std::ios::out);
@@ -553,7 +543,7 @@ void Graph::saveFile(std::string fileName)
         ///pour tout les sommets existants
         for(auto &el:m_vertices)
         {
-            ///on Ã©crit le numÃ©ro de sommet, sa valeur, sa position et le nom de son image
+            ///on écrit le numéro de sommet, sa valeur, sa position et le nom de son image
             fichier<<el.first<<std::endl;
             fichier<<el.second.m_value<<std::endl;
             posInter=el.second.m_interface->m_top_box.get_posx()+2;
@@ -563,12 +553,12 @@ void Graph::saveFile(std::string fileName)
             name=el.second.m_interface->m_img.getName();
             fichier<<name<<std::endl;
         }
-        ///on lit le nb d'arÃªte
+        ///on lit le nb d'arête
         fichier<<m_edges.size()<<std::endl;
-        ///pour toutes les arÃªtes existantes
+        ///pour toutes les arêtes existantes
         for(auto &el:m_edges)
         {
-            ///on lit leur numÃ©ros, les sommets et leurs valeurs
+            ///on lit leur numéros, les sommets et leurs valeurs
             fichier<<el.first<<std::endl;
             fichier<<el.second.m_to<<std::endl;
             fichier<<el.second.m_from<<std::endl;
@@ -584,13 +574,8 @@ void Graph::saveFile(std::string fileName)
     }
 }
 
-<<<<<<< HEAD
 /// La méthode update à appeler dans la boucle de jeu pour les graphes avec interface
 void Graph::update(clock_t ini, bool animation)
-=======
-/// La mÃ©thode update Ã  appeler dans la boucle de jeu pour les graphes avec interface
-void Graph::update()
->>>>>>> 3e970ea5c73e26c768074acc39a950b1286b675d
 {
     bool good;
     int num=m_numGraphe;
@@ -607,23 +592,13 @@ void Graph::update()
     for (auto &elt : m_vertices)
     {
         elt.second.post_update();
-<<<<<<< HEAD
         ///si on ajoute un nouvelle arête
-=======
-        ///on appuie sur la croix pour supprimer
-        if(elt.second.m_interface->m_cross.get_value())
-        {
-            ///on enlÃ©ve le sommet
-            removeVertex(elt.first);
-        }
-        ///si on ajoute un nouvelle arÃªte
->>>>>>> 3e970ea5c73e26c768074acc39a950b1286b675d
         if(m_ajouterNewEdge)
         {
             ///si on appuie sur le bouton bleu
             if(elt.second.m_interface->m_button_addEdge.get_value())
             {
-                ///si on a pas encore selectionnÃ© de sommet
+                ///si on a pas encore selectionné de sommet
                 if(m_addFrom==false)
                 {
                     ///on stocke l'indice du sommet
@@ -631,15 +606,11 @@ void Graph::update()
                     m_addFrom=true;
                     m_vertexAlreadyUse=m_vertexForNewEdge[0];
                 }
-                /// si on a selectionnÃ© un autre sommet
+                /// si on a selectionné un autre sommet
                 else if(m_addTo==false&&m_addFrom==true&&m_vertexAlreadyUse!=elt.first)
                 {
-<<<<<<< HEAD
                     good=true;
                     ///on ajoute une arrête et reset tout les paramétre
-=======
-                    ///on ajoute une arrÃªte et reset tout les paramÃ©tre
->>>>>>> 3e970ea5c73e26c768074acc39a950b1286b675d
                     m_vertexForNewEdge[1]=elt.first;
                     m_addFrom=false;
                     m_addTo=false;
@@ -667,15 +638,11 @@ void Graph::update()
     for (auto &elt : m_edges)
     {
         elt.second.post_update();
-<<<<<<< HEAD
         ///si on clique sur la croix d'une arête
 
     }
     for(auto & elt:m_edges)
     {
-=======
-        ///si on clique sur la croix d'une arÃªte
->>>>>>> 3e970ea5c73e26c768074acc39a950b1286b675d
         if(elt.second.m_interface->m_cross.get_value())
         {
             ///on la supprime
@@ -700,7 +667,7 @@ void Graph::update()
     ///si on clique sur le bouton sauvegarder
     if(m_interface->m_button_save.get_value())
     {
-        ///selon le numÃ©ro du graphe
+        ///selon le numéro du graphe
         switch(m_numGraphe)
         {
         case 1:
@@ -751,12 +718,8 @@ void Graph::update()
     ///on appuie sur le bouton reset
     if(m_interface->m_button_reset.get_value())
     {
-<<<<<<< HEAD
         std::cout<<"good";
         ///en fonction du numéro du graphe
-=======
-        ///en fonction du numÃ©ro du graphe
->>>>>>> 3e970ea5c73e26c768074acc39a950b1286b675d
         ///on lit le fichier Reset.txt
         switch(m_numGraphe)
         {
@@ -877,16 +840,9 @@ void Graph::update()
         m_interface->m_button_random.set_value(false);
         random();
     }
-    if(m_interface->m_button_noAddEdge.get_value())
-    {
-        m_ajouterNewEdge=false;
-        m_interface->m_button_noAddEdge.set_value(false);
-        std::cout<<"Vous n'ajoutez plus une nouvelle arete"<<std::endl;
-    }
-
 }
 
-///la mÃ©thode qui ajoute une arete
+///la méthode qui ajoute une arete
 void Graph::addEdge(std::vector<int> m_newVertexForEdge)
 {
     ///variable
@@ -923,7 +879,7 @@ void Graph::addEdge(std::vector<int> m_newVertexForEdge)
 ///la methode qui enleve un sommet
 void Graph::removeVertex(int num)
 {
-    ///on enleve les aretes qui sont connectÃ©s par des sommets
+    ///on enleve les aretes qui sont connectés par des sommets
     for(int i=m_vertices[num].m_in.size()-1; i>=0; i--)
     {
         removeEdge(m_vertices[num].m_in[i]);
@@ -936,7 +892,6 @@ void Graph::removeVertex(int num)
     m_interface->m_main_box.remove_child( m_vertices[num].m_interface->m_top_box );
     m_vertices.erase(num);
     std::cout<<"Suppresion d'un sommet"<<std::endl;
-<<<<<<< HEAD
     rendreConti(num);
 }
 
@@ -1041,16 +996,10 @@ void Graph::rendreConti2(std::string fileName)
     }
 }
 
-=======
-}
-
-///la mÃ©thode qui ajoute un sommet
->>>>>>> 3e970ea5c73e26c768074acc39a950b1286b675d
 void Graph::addVertex()
 {
     ///on regarde l'indice le plus grand de la map d'arete
     int indice;
-<<<<<<< HEAD
     //int number1;
     std::string name;
     std::string number;
@@ -1154,21 +1103,6 @@ void Graph::addVertex()
     }
     }
 
-=======
-    int number1;
-    std::string name;
-    std::string number;
-    std::string picName="clown1.jpg";
-    switch(m_numGraphe)
-    {
-    case 1:
-        break;
-    case 2:
-        break;
-    case 3:
-        break;
-    }
->>>>>>> 3e970ea5c73e26c768074acc39a950b1286b675d
     for(auto it=m_vertices.begin(); it!=m_vertices.end(); it++)
     {
         indice= it->first;
@@ -1178,42 +1112,37 @@ void Graph::addVertex()
 ///on ajoute un sommet
     add_interfaced_vertex(indice,50,300,300,picName);
 }
-<<<<<<< HEAD
 ///la méthode qui enleve une arete
-=======
-
-///la mÃ©thode qui enleve une arete
->>>>>>> 3e970ea5c73e26c768074acc39a950b1286b675d
 void Graph::removeEdge(int num)
 {
-    /// rÃ©fÃ©rence vers le Edge Ã  enlever
+    /// référence vers le Edge à enlever
     Edge &remed=m_edges[num];
     //std::cout << m_vertices[remed.m_from].m_in.size() << " " << m_vertices[remed.m_from].m_out.size() << std::endl;
     //std::cout << m_vertices[remed.m_to].m_in.size() << " " << m_vertices[remed.m_to].m_out.size() << std::endl;
     //std::cout << m_edges.size() << std::endl;
-    /// test : on a bien des Ã©lÃ©ments interfacÃ©s
+    /// test : on a bien des éléments interfacés
     if (m_interface && remed.m_interface)
     {
-        /// Ne pas oublier qu'on a fait Ã§a Ã  l'ajout de l'arc :
+        /// Ne pas oublier qu'on a fait ça à l'ajout de l'arc :
         /* EdgeInterface *ei = new EdgeInterface(m_vertices[id_vert1], m_vertices[id_vert2]); */
         /* m_interface->m_main_box.add_child(ei->m_top_edge);  */
         /* m_edges[idx] = Edge(weight, ei); */
-        /// Le new EdgeInterface ne nÃ©cessite pas de delete car on a un shared_ptr
-        /// Le Edge ne nÃ©cessite pas non plus de delete car on n'a pas fait de new (sÃ©mantique par valeur)
+        /// Le new EdgeInterface ne nécessite pas de delete car on a un shared_ptr
+        /// Le Edge ne nécessite pas non plus de delete car on n'a pas fait de new (sémantique par valeur)
         /// mais il faut bien enlever le conteneur d'interface m_top_edge de l'arc de la main_box du graphe
         m_interface->m_main_box.remove_child( remed.m_interface->m_top_edge );
     }
-    /// Il reste encore Ã  virer l'arc supprimÃ© de la liste des entrants et sortants des 2 sommets to et from
+    /// Il reste encore à virer l'arc supprimé de la liste des entrants et sortants des 2 sommets to et from
     /// References sur les listes de edges des sommets from et to
     std::vector<int> &vefrom = m_vertices[remed.m_from].m_out;
     std::vector<int> &veto = m_vertices[remed.m_to].m_in;
     vefrom.erase( std::remove( vefrom.begin(), vefrom.end(), num ), vefrom.end() );
     veto.erase( std::remove( veto.begin(), veto.end(), num ), veto.end() );
-    /// Le Edge ne nÃ©cessite pas non plus de delete car on n'a pas fait de new (sÃ©mantique par valeur)
-    /// Il suffit donc de supprimer l'entrÃ©e de la map pour supprimer Ã  la fois l'Edge et le EdgeInterface
+    /// Le Edge ne nécessite pas non plus de delete car on n'a pas fait de new (sémantique par valeur)
+    /// Il suffit donc de supprimer l'entrée de la map pour supprimer à la fois l'Edge et le EdgeInterface
     /// mais malheureusement ceci n'enlevait pas automatiquement l'interface top_edge en tant que child de main_box !
     m_edges.erase( num );
-    /// Tester la cohÃ©rence : nombre d'arc entrants et sortants des sommets 1 et 2
+    /// Tester la cohérence : nombre d'arc entrants et sortants des sommets 1 et 2
 }
 //void Graph::kVertexConnexite()
 //{
@@ -1235,14 +1164,10 @@ void Graph::removeEdge(int num)
 //    }
 //}
 
-<<<<<<< HEAD
 ///ss prog qui efface toute les sommets et arete d'un graphe et on set son numéro
-=======
-///ss prog qui efface toute les sommets et arete d'un graphe et on set son numÃ©ro
->>>>>>> 3e970ea5c73e26c768074acc39a950b1286b675d
 void Graph::initialisation()
 {
-    ///on dÃ©truit les map de sommet et d'arÃªtes
+    ///on détruit les map de sommet et d'arêtes
     for(auto it = m_vertices.begin(); it != m_vertices.end();)
     {
         it=m_vertices.erase(it);
@@ -1254,7 +1179,6 @@ void Graph::initialisation()
     m_numGraphe=0;
 }
 
-<<<<<<< HEAD
 void Graph::init_k_connex()
 {
     int indice;
@@ -2033,9 +1957,6 @@ bool* Graph::recherche_cmp(int i)
 }
 
 /// Aide à l'ajout de sommets interfacés
-=======
-/// Aide Ã  l'ajout de sommets interfacÃ©s
->>>>>>> 3e970ea5c73e26c768074acc39a950b1286b675d
 void Graph::add_interfaced_vertex(int idx, double value, int x, int y, std::string pic_name, int pic_idx )
 {
     if ( m_vertices.find(idx)!=m_vertices.end() )
@@ -2043,7 +1964,7 @@ void Graph::add_interfaced_vertex(int idx, double value, int x, int y, std::stri
         std::cerr << "Error adding vertex at idx=" << idx << " already used..." << std::endl;
         throw "Error adding vertex";
     }
-    // CrÃ©ation d'une interface de sommet
+    // Création d'une interface de sommet
     VertexInterface *vi = new VertexInterface(idx, x, y, pic_name, pic_idx);
     // Ajout de la top box de l'interface de sommet
     m_interface->m_main_box.add_child(vi->m_top_box);
@@ -2060,7 +1981,7 @@ void Graph::initButton()
     }
 }
 
-/// Aide Ã  l'ajout d'arcs interfacÃ©s
+/// Aide à l'ajout d'arcs interfacés
 void Graph::add_interfaced_edge(int idx, int id_vert1, int id_vert2, double weight)
 {
     if ( m_edges.find(idx)!=m_edges.end() )
