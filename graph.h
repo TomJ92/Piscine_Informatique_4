@@ -592,7 +592,7 @@ class Graph
         ///k connexité
         /*!
          * \brief k-connexite
-         * \param inter (), m_allCombi (toutes les combinaisons possibles trouvees)
+         * \param inter (combinaison), m_allCombi (toutes les combinaisons possibles trouvees)
          */
         void k_connex(std::vector<int>& inter,std::vector<std::vector <int>>& m_allCombi);
         ///boléen pour savoir si le chemin est bon
@@ -605,7 +605,7 @@ class Graph
         ///afficher les combinaison possible
         /*!
          * \brief affichage des combinaisons possibles
-         * \param inter (), m_allCombi (toutes les combinaisons possibles trouvees)
+         * \param inter (combinaison), m_allCombi (toutes les combinaisons possibles trouvees)
          */
         void afficher_k_connex(std::vector<int>& inter,std::vector<std::vector <int>>& allCombi);
         ///forte Connex
